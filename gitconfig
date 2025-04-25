@@ -1,0 +1,61 @@
+[user]
+	name = Fredrik Averpil
+	email = fredrik.averpil@gmail.com
+	# for github only, fredrikaverpil@users.noreply.github.com
+[core]
+	excludesfile = ~/.gitignore_global
+  # editor = code --wait  # vscode
+	editor = nvim
+[pull]
+	ff = only
+[merge]
+  # tool = vscode
+	# tool = neovim
+  tool = diffview
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
+[mergetool "neovim"]
+	cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED
+[mergetool "diffview"]
+  cmd = nvim -c \"DiffviewOpen\"
+[mergetool]
+  prompt = false
+[diff]
+  # tool = vscode
+	tool = neovim
+  # tool = diffview
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[difftool "neovim"]
+	cmd = nvim -d $LOCAL $REMOTE
+[difftool "diffview"]
+  cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -c \"DiffviewOpen\"
+[difftool]
+  prompt = false
+[init]
+	defaultBranch = main
+[rebase]
+	autostash = true
+[commit]
+	template = ~/.gitmessage
+[push]
+	autoSetupRemote = true
+
+# Git commit signing
+[include]
+    path = ~/.gitconfig_1password
+
+# GitHub https authentication
+[credential "https://github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+# Always keep gitconfig for work at bottom of this file
+[includeIf "gitdir:~/code/work/**/.git"]
+	path = ~/.gitconfig_work
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

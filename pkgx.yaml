@@ -1,0 +1,11 @@
+dependencies:
+  - ruby
+  - gem
+  - node
+  - npm
+  - bun
+  - python
+  - go
+  - lua
+  - cargo
+  - rustup

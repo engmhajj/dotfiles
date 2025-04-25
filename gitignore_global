@@ -1,0 +1,58 @@
+# os generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editing
+.vscode
+.nvim.lua
+.lazy.lua
+
+# Environments
+.pkgx.yml
+.pkgx.yaml
+.envrc
+
+# Node
+/node_modules
+
+# byte-compiled / optimized / dll files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# go
+coverage.out
+
+# c extensions
+*.so
+
+# python distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.nox
+.tox
+.pytest_cache
+htmlcov
+.coverage*
+
+# zig
+.zig-cache
