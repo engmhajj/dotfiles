@@ -1,0 +1,56 @@
+# Usage:
+# brew bundle --file=path/to/Brewfile
+
+# Taps (third-party repositories)
+tap 'homebrew/linux-fonts'
+
+# system
+brew 'zsh-autosuggestions'
+brew 'zsh-syntax-highlighting'
+
+# fonts
+cask 'font-jetbrains-mono'
+cask 'font-jetbrains-mono-nerd-font'
+cask 'font-symbols-only-nerd-font'
+cask 'font-noto-color-emoji'
+cask 'font-noto-emoji'
+
+# terminal cli tools
+brew 'asciinema'
+brew 'atuin'
+brew 'bat'
+brew 'eza'
+brew 'gh'
+brew 'grpcurl'
+brew 'jq'
+brew 'kubectx'
+brew 'ollama'
+brew 'pre-commit'
+brew 'starship'
+brew 'tree'
+brew 'yq'
+brew 'zoxide'
+
+# slides
+brew 'slides'
+brew 'chafa'
+
+# tmux
+brew 'tmux'
+# brew 'tmuxinator'
+
+# neovim
+brew 'neovim'
+brew 'ripgrep'
+brew 'cmake'
+brew 'gcc'
+brew 'make'
+brew 'ripgrep'
+brew 'fd'
+brew 'lazygit'
+brew 'fzf'
+brew 'gnu-sed'  # be linux-compatible
+brew 'pkg-config'  # gh-actions.nvim
+
+# other casks
+cask 'google-cloud-sdk'
