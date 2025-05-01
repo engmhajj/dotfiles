@@ -1134,21 +1134,21 @@ function M.setup_terminal_keymaps()
   vim.api.nvim_set_keymap("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true })
 
   local floating_term_cmd = function()
-    local cmd = { "zsh" }
-    local opts = { cwd = vim.fn.getcwd() }
-    Snacks.terminal.toggle(cmd, opts)
+    -- local cmd = { "zsh" }
+    -- local opts = { cwd = vim.fn.getcwd() }
+    Snacks.terminal.toggle()
   end
 
   return {
     {
       ctrl_alt_slash,
-      require("fredrik.utils.terminal").toggle_split_terminal,
+      -- require("fredrik.utils.terminal").toggle_split_terminal,
       mode = { "n", "i", "t", "v" },
       desc = "Toggle split terminal",
     },
     {
       ctrl_alt_underscore,
-      require("fredrik.utils.terminal").toggle_split_terminal,
+      -- require("fredrik.utils.terminal").toggle_split_terminal,
       mode = { "n", "i", "t", "v" },
       desc = "Toggle split terminal",
     },

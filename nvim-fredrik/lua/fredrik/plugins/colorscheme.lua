@@ -68,7 +68,7 @@ return {
         auto_enable = true,
         lsp = true,
       },
-    },
+   },
     config = function(_, opts)
       local ccc = require("ccc")
       ccc.setup(opts)
