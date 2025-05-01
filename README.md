@@ -1,6 +1,6 @@
 # dotfiles 🍩
 
-![screenshot](https://github.com/user-attachments/assets/ef833ca0-3d39-4a7c-94af-0f76afb96e6b)
+This repos was forked from Fredrik
 
 These are my personal dotfiles. The setup is based on
 [dotbot](https://github.com/anishathalye/dotbot) and aims to be as idempotent as
