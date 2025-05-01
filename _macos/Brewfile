@@ -9,7 +9,7 @@ cask_args appdir: '/Applications'
 tap 'dustinblackman/tap'
 tap 'go-task/tap'
 tap 'joshmedeski/sesh'
-tap '1password/tap'
+#tap '1password/tap'
 tap 'nikitabobko/tap'
 
 # system

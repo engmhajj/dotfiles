@@ -20,10 +20,9 @@ function M.setup_diagnostics()
     --   -- Only show virtual line diagnostics for the current cursor line
     --   current_line = false,
     -- },
-
     -- virtual_text = false,
     virtual_text = function(_, _)
-      ---@class vim.diagnostic.Opts.VirtualText
+      --   ---@class vim.diagnostic.Opts.VirtualText
       return { spacing = 4, source = "if_many", prefix = prefix }
     end,
 

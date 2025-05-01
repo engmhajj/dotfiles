@@ -3,7 +3,7 @@ local function folder()
   local foldername = cwd:match("([^/]+)$")
   return foldername
 end
-
+local icons = require("fredrik.utils.icons")
 return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
@@ -52,7 +52,14 @@ return {
           end,
         },
         "diagnostics",
-        "diff",
+        {
+          "diff",
+          symbols = {
+            added = icons.icons.git.added,
+            modified = icons.icons.git.modified,
+            removed = icons.icons.git.removed,
+          },
+        },
       },
       lualine_c = {
         { folder, color = { gui = "bold" }, separator = "/", padding = { left = 1, right = 0 } },

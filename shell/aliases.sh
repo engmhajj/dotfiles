@@ -3,8 +3,12 @@
 # Aliases; runs in the same shell you are already in
 # See bin folder for scripts which will run in their own shell
 
+# program aliases
+alias v=nvim
+
 # Global settings
 alias dotfiles='cd $DOTFILES'
+alias ls='eza'
 alias ll='eza --long --header --group-directories-first --git --group --all'
 alias tree='tree -C'
 

@@ -1,11 +1,37 @@
 M = {}
 
+-- Exit insert mode without hitting Esc
+vim.keymap.set("i", "jj", "<Esc><Esc>", { desc = "Esc" })
+
+-- Select all
+vim.keymap.set("n", "==", "gg<S-v>G")
+-- Paste without overwriting register
+vim.keymap.set("v", "p", '"_dP')
+
+-- Copy text to " register
+vim.keymap.set("n", "<leader>y", '"+y', { desc = 'Yank into " register' })
+vim.keymap.set("v", "<leader>y", '"+y', { desc = 'Yank into " register' })
+vim.keymap.set("n", "<leader>Y", '"+Y', { desc = 'Yank into " register' })
+
+-- close buffer
+vim.keymap.set("n", "<leader>q", "<cmd>bd<CR>", { desc = "Close Buffer" })
+-- Replace word under cursor across entire buffer
+vim.keymap.set(
+  "n",
+  "<leader>rw",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "Replace word under cursor" }
+)
+-- Copy file paths
+vim.keymap.set("n", "<leader>cf", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy File Name" })
+vim.keymap.set("n", "<leader>cp", '<cmd>let @+ = expand("%:p")<CR>', { desc = "Copy File Path" })
+-- Exit terminal mode shortcut
 -- windows
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window", silent = true, noremap = true })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", silent = true, noremap = true })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", silent = true, noremap = true })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window", silent = true, noremap = true })
--- Resize windows using <ctrl> arrow keys
+-- vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window", silent = true, noremap = true })
+-- vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", silent = true, noremap = true })
+-- vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", silent = true, noremap = true })
+-- vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window", silent = true, noremap = true })
+-- -- Resize windows using <ctrl> arrow keys
 vim.keymap.set("n", "<C-Up>", ":resize +2<CR>", { desc = "Increase window height", silent = true })
 vim.keymap.set("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease window height", silent = true })
 vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase window width", silent = true })
@@ -377,7 +403,7 @@ function M.setup_snacks_keymaps()
       desc = "[S]earch [N]eovim files",
     },
     {
-      "<leader>fp",
+      "<leader>ff",
       function()
         Snacks.picker.projects()
       end,
@@ -393,7 +419,7 @@ function M.setup_snacks_keymaps()
     },
     -- git
     {
-      "<leader>gd",
+      "<leader>gu",
       function()
         Snacks.picker.git_diff()
       end,

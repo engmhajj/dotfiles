@@ -1,6 +1,6 @@
 local function set_dark()
   vim.o.background = "light" -- NOTE: tokyonight-moon uses light background
-  vim.cmd.colorscheme("tokyonight-moon")
+  vim.cmd.colorscheme("tokyonight-night")
 end
 
 local function set_light()
@@ -28,10 +28,9 @@ local function set_tmux(style)
 
   local tmux_theme = ""
   if style == "dark" then
-    tmux_theme =
-      vim.fn.expand("~/.local/share/mohamadelhajhassan/lazy/tokyonight.nvim/extras/tmux/tokyonight_moon.tmux")
+    tmux_theme = vim.fn.expand("~/.tmux/plugins/tokyo-night-tmux/tokyo-night.tmux")
   elseif style == "light" then
-    tmux_theme = vim.fn.expand("~/.local/share/mohamadelhajhassan/lazy/nightfox.nvim/extra/dayfox/dayfox.tmux")
+    tmux_theme = vim.fn.expand("~/.local/share/fredrik/lazy/nightfox.nvim/extra/dayfox/dayfox.tmux")
   end
 
   if vim.fn.filereadable(tmux_theme) == 1 then
@@ -81,12 +80,33 @@ return {
     lazy = true,
     ---@class tokyonight.Config
     opts = {
-      transparent = true, -- Enable transparency
+      transparent = false, -- Enable transparency
       styles = {
         -- Background styles. Can be "dark", "transparent" or "normal"
         sidebars = "dark",
         floats = "dark",
       },
+
+      on_colors = function(colors)
+        colors.git.add = "green"
+        colors.git.change = "blue"
+        colors.git.delete = "red"
+      end,
+      on_highlights = function(highlights)
+        -- Set cursor color, these will be called by the "guicursor" option in
+        -- the options.lua file, which will be used by neovide
+        highlights.Cursor = { bg = "#F712ff" }
+        highlights.CursorIM = { bg = "#F712FF" }
+        highlights.CursorLine = { bg = "#2f334d" }
+        highlights.CursorLineNr = {
+          bold = true,
+          fg = "#ff966c",
+        }
+        -- Apply all highlight definitions at once
+        -- for group, props in pairs(highlight_definitions) do
+        --   highlights[group] = props
+        -- end
+      end,
       dim_inactive = false, -- dims inactive windows
     },
   },
