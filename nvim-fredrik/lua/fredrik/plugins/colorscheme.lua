@@ -28,7 +28,8 @@ local function set_tmux(style)
 
   local tmux_theme = ""
   if style == "dark" then
-    tmux_theme = vim.fn.expand("~/.tmux/plugins/tokyo-night-tmux/tokyo-night.tmux")
+    -- tmux_theme = vim.fn.expand("~/.tmux/plugins/tokyo-night-tmux/tokyo-night.tmux")
+    --tmux_theme = vim.fn.expand("~/.dotfiles/.tmux/.tmux.conf")
   elseif style == "light" then
     tmux_theme = vim.fn.expand("~/.local/share/fredrik/lazy/nightfox.nvim/extra/dayfox/dayfox.tmux")
   end
@@ -68,7 +69,7 @@ return {
         auto_enable = true,
         lsp = true,
       },
-   },
+    },
     config = function(_, opts)
       local ccc = require("ccc")
       ccc.setup(opts)
@@ -89,8 +90,10 @@ return {
 
       on_colors = function(colors)
         colors.git.add = "green"
-        colors.git.change = "blue"
+        colors.git.change = "yellow"
         colors.git.delete = "red"
+        colors.bg = "black"
+        colors.bg_statusline = "#001440"
       end,
       on_highlights = function(highlights)
         -- Set cursor color, these will be called by the "guicursor" option in

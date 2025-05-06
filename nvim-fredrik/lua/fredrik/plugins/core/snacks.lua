@@ -25,7 +25,7 @@ return {
             opts[pos] = opts[pos] or {}
             table.insert(opts[pos], {
               ft = "snacks_terminal",
-              size = { height = 0.2 },
+              size = { height = 0.3 },
               title = "%{b:snacks_terminal.id}: %{b:term_title}",
               filter = function(_buf, win)
                 return vim.w[win].snacks_win
@@ -106,7 +106,7 @@ return {
       notifier = {
         enabled = true,
         timeout = 2000, -- default timeout in ms
-        width = { min = 40, max = 0.4 },
+        width = { min = 30, max = 0.4 },
         height = { min = 1, max = 0.6 },
         -- editor margin to keep free. tabline and statusline are taken into account automatically
         margin = { top = 0, right = 1, bottom = 0 },
@@ -134,7 +134,7 @@ return {
         -- only works for styles with a border
         ---@type string|boolean
         more_format = " ↓ %d lines ",
-        refresh = 50, -- refresh at most every 50ms
+        -- refresh = 50, -- refresh at most every 50ms
       },
       -- This keeps the image on the top right corner, basically leaving your
       -- text area free, suggestion found in reddit by user `Redox_ahmii`

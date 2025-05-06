@@ -62,7 +62,7 @@
       path: vscode_settings.jsonc
       force: true
       if: '[ "$(uname -s)" = "Darwin" ]'
-    /Users/mohamadelhajhassan/Library/Application Support/Code - Insiders/User/settings.json:
+    ~/Library/Application Support/Code - Insiders/User/settings.json:
       path: vscode_insiders_settings.jsonc
       force: true
       if: '[ "$(uname -s)" = "Darwin" ]'

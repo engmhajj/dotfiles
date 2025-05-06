@@ -14,7 +14,7 @@ vim.keymap.set("v", "<leader>y", '"+y', { desc = 'Yank into " register' })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = 'Yank into " register' })
 
 -- close buffer
-vim.keymap.set("n", "<leader>q", "<cmd>bd<CR>", { desc = "Close Buffer" })
+vim.keymap.set("n", "<leader>x", "<cmd>bd<CR>", { desc = "Close Buffer" })
 -- Replace word under cursor across entire buffer
 vim.keymap.set(
   "n",
@@ -111,8 +111,8 @@ vim.keymap.set("v", ">", ">gv", { desc = "Indent right" })
 vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- lists
-vim.keymap.set("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
-vim.keymap.set("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
+vim.keymap.set("n", "<leader>zl", "<cmd>lopen<cr>", { desc = "Location List" })
+vim.keymap.set("n", "<leader>zq", "<cmd>copen<cr>", { desc = "Quickfix List" })
 vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
 vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 
@@ -141,12 +141,12 @@ end
 function M.setup_trouble_keymaps()
   return {
     {
-      "<leader>xx",
+      "<leader>zx",
       "<cmd>Trouble diagnostics toggle<cr>",
       desc = "Diagnostics (Trouble)",
     },
     {
-      "<leader>xX",
+      "<leader>zX",
       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
       desc = "Buffer Diagnostics (Trouble)",
     },
@@ -161,12 +161,12 @@ function M.setup_trouble_keymaps()
       desc = "LSP Definitions / references / ... (Trouble)",
     },
     {
-      "<leader>xL",
+      "<leader>zL",
       "<cmd>Trouble loclist toggle<cr>",
       desc = "Location List (Trouble)",
     },
     {
-      "<leader>xQ",
+      "<leader>zQ",
       "<cmd>Trouble qflist toggle<cr>",
       desc = "Quickfix List (Trouble)",
     },
@@ -1282,7 +1282,7 @@ function M.setup_whichkey(wk)
     { "<leader>sn", group = "noice" },
     { "<leader>t", group = "test" },
     { "<leader>u", group = "ui" },
-    { "<leader>x", group = "diagnostics/quickfix" },
+    { "<leader>z", group = "diagnostics/quickfix" },
     { "<leader>w", group = "windows", proxy = "<C-w>" },
     {
       "<leader>b",

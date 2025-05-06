@@ -26,11 +26,12 @@ return {
     -- noice = {
     --   lualine_component = "filename",
     -- },
-
+    --   
     options = {
       theme = "auto",
-      component_separators = { left = "", right = "" },
-      section_separators = { left = "", right = "" },
+      icons_enabled = true,
+      component_separators = { left = "", right = "" },
+      section_separators = { left = "", right = "" },
       globalstatus = true,
       disabled_filetypes = {},
     },

@@ -39,6 +39,7 @@
   "mcphub.nvim": { "branch": "main", "commit": "6f1ee64faacd549d48517a7978c335053d8f9cd2" },
   "mini.ai": { "branch": "main", "commit": "ebb04799794a7f94628153991e6334c3304961b8" },
   "mini.cursorword": { "branch": "main", "commit": "7d1b38a17834acbbc4feff8e42aedc4ed0c6ff06" },
+  "mini.hipatterns": { "branch": "main", "commit": "e5083df391171dc9d8172645606f8496d9443374" },
   "mini.icons": { "branch": "main", "commit": "397ed3807e96b59709ef3292f0a3e253d5c1dc0a" },
   "neogit": { "branch": "master", "commit": "9bb1e73c534f767607e0a888f3de4c942825c501" },
   "neominimap.nvim": { "branch": "main", "commit": "1370ea60e5450bb46c9f0413f9319dfa2a326450" },
