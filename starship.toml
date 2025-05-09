@@ -175,7 +175,7 @@ disabled = false
 
 [character]
 disabled = false
-success_symbol = '[󰄛 👉🏼❯❯❯](bold fg:#00ff00)'
+success_symbol = '[󰄛 ❯❯❯](bold fg:#00ff00)'
 error_symbol = '[󰄛 XXXX](bold fg:color_red)'
 vimcmd_symbol = '[󰄛 ❮❮❮❮](bold fg:color_green)'
 vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
@@ -195,7 +195,7 @@ style = 'bold red'
 
 [shell]
 fish_indicator = '󰈺 '
-zsh_indicator = '<zsh🐚>'
+zsh_indicator = 'zsh 👉🏼'
 powershell_indicator = '_'
 unknown_indicator = 'mystery shell'
 style = '#00ff00 bold'
