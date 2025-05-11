@@ -19,27 +19,28 @@ local function extend_capabilities(servers)
   end
 
   -- FIXME: workaround for https://github.com/neovim/neovim/issues/28058
-  -- if servers["gopls"] ~= nil then
-  --   local server_opts = servers["gopls"]
-  --   for _, v in pairs(server_opts) do
-  --     if type(v) == "table" and v.workspace then
-  --       -- vim.notify(vim.inspect("Disabling workspace/didChangeWatchedFiles for " .. server), vim.log.levels.INFO)
-  --       v.workspace.didChangeWatchedFiles = {
-  --         dynamicRegistration = false,
-  --         relativePatternSupport = false,
-  --       }
+  --   if servers["gopls"] ~= nil then
+  --     local server_opts = servers["gopls"]
+  --     for _, v in pairs(server_opts) do
+  --       if type(v) == "table" and v.workspace then
+  --         -- vim.notify(vim.inspect("Disabling workspace/didChangeWatchedFiles for " .. server), vim.log.levels.INFO)
+  --         v.workspace.didChangeWatchedFiles = {
+  --           dynamicRegistration = false,
+  --           relativePatternSupport = false,
+  --         }
+  --       end
   --     end
   --   end
-  -- end
 end
 
 --- Ensure LSP binaries are installed with mason-lspconfig.
 ---@param servers table<string, vim.lsp.Config>
 local function ensure_servers_installed(servers)
   local supported_servers = {}
+  local lspmasonmapping = require("mason-lspconfig").get_mappings().lspconfig_to_package
   local have_mason_lspconfig, _ = pcall(require, "mason-lspconfig")
   if have_mason_lspconfig then
-    supported_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
+    supported_servers = vim.tbl_keys(lspmasonmapping)
     local enabled_servers = {}
     for server, server_opts in pairs(servers) do
       if server_opts then

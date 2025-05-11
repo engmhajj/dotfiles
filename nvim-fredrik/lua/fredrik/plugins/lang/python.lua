@@ -166,7 +166,7 @@ return {
               analysis = {
                 -- NOTE: uncomment this to ignore linting. Good for projects where
                 -- basedpyright lights up as a christmas tree.
-                ignore = { "*" },
+                -- ignore = { "*" },
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = true,
                 diagnosticMode = "openFilesOnly",

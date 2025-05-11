@@ -79,7 +79,7 @@ vim.opt.guicursor = {
 -- splitting
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-
+vim.opt.termguicolors = true
 -- set up diagnostics
 require("fredrik.utils.diagnostics").setup_diagnostics()
 

@@ -1,7 +1,3 @@
-if true then
-  return {}
-end
-
 vim.filetype.add({
   extension = {
     gotmpl = "gotmpl",
@@ -41,7 +37,7 @@ return {
         opts = function(_, opts)
           opts.ensure_installed = opts.ensure_installed or {}
           vim.list_extend(opts.ensure_installed, {
-            -- "gopls",
+            "gopls",
             "html",
           })
         end,
@@ -52,14 +48,14 @@ return {
         -- TODO: evaluate https://github.com/yayolande/go-template-lsp
 
         ---@type vim.lsp.Config
-        -- gopls = {
-        --   filetypes = filetypes,
-        --   settings = {
-        --     gopls = {
-        --       templateExtensions = filetypes, -- make sure this filetype is set in the buffer
-        --     },
-        --   },
-        -- },
+        gopls = {
+          filetypes = filetypes,
+          settings = {
+            gopls = {
+              templateExtensions = filetypes, -- make sure this filetype is set in the buffer
+            },
+          },
+        },
 
         ---@type vim.lsp.Config
         superhtml = { filetypes = filetypes, settings = { superhtml = {} } },

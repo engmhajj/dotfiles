@@ -1,7 +1,6 @@
 if true then
   return {}
 end
-
 local filetypes = { "templ" }
 
 vim.api.nvim_create_autocmd("FileType", {

@@ -105,7 +105,7 @@ return {
       ---@field filter? fun(notif: snacks.notifier.Notif): boolean # filter our unwanted notifications (return false to hide)
       notifier = {
         enabled = true,
-        timeout = 2000, -- default timeout in ms
+        timeout = 500, -- default timeout in ms
         width = { min = 30, max = 0.4 },
         height = { min = 1, max = 0.6 },
         -- editor margin to keep free. tabline and statusline are taken into account automatically
@@ -134,7 +134,7 @@ return {
         -- only works for styles with a border
         ---@type string|boolean
         more_format = " ↓ %d lines ",
-        -- refresh = 50, -- refresh at most every 50ms
+        refresh = 2000, -- refresh at most every 50ms
       },
       -- This keeps the image on the top right corner, basically leaving your
       -- text area free, suggestion found in reddit by user `Redox_ahmii`

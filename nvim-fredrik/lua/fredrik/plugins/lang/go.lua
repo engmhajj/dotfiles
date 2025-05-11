@@ -1,7 +1,3 @@
-if true then
-  return {}
-end
-
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "go", "gomod", "gowork" },
   callback = function()
@@ -269,6 +265,7 @@ return {
 
   {
     "maxandron/goplements.nvim",
+    event = "InsertEnter",
     lazy = true,
     ft = "go",
     opts = {},
@@ -386,6 +383,7 @@ return {
   {
     "fredrikaverpil/godoc.nvim",
     dev = true, -- see lazy.lua for local path details
+    event = "VeryLazy",
     dependencies = {
       { "folke/snacks.nvim" },
       {

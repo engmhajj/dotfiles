@@ -2,7 +2,8 @@
 
 # color variables
 INACTIVE_BORDER_COLOR='#444444'
-ACTIVE_BORDER_COLOR='#00afff'
+ACTIVE_BORDER_COLOR='#5fff00'
+ACTIVE_BORDER_COLOR_STYLE="bg=#d65d0e"
 RED='#d70000'
 YELLOW='#ffff00'
 GREEN='#5fff00'
@@ -27,7 +28,7 @@ done
 PRETTY_PATH=$(sed "s:^$HOME:~:" <<<$PANE_CURRENT_PATH)
 
 # calculate reset color
-RESET_BORDER_COLOR=$([ $PANE_ACTIVE -eq 1 ] && echo $ACTIVE_BORDER_COLOR || echo $INACTIVE_BORDER_COLOR)
+RESET_BORDER_COLOR=$([ $PANE_ACTIVE -eq 1 ] && echo $ACTIVE_BORDER_COLOR && echo $ACTIVE_BORDER_COLOR_STYLE || echo $INACTIVE_BORDER_COLOR)
 
 color() {
 	INTENT=$1
@@ -101,4 +102,4 @@ git_prompt() {
 }
 
 # final output
-echo " $PRETTY_PATH $(cd $PANE_CURRENT_PATH && git_prompt)"
+echo "📁$PRETTY_PATH $(cd $PANE_CURRENT_PATH && git_prompt)🔢#{[#{pane_index}]↬#{pane_title}}"

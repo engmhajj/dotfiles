@@ -12,15 +12,15 @@ M.icons = {
     LogPoint = ".>",
   },
   diagnostics = {
-    Error = " ",
-    Warn = " ",
-    Hint = " ",
-    Info = " ",
+    Error = "⛔",
+    Warn = "⚠️",
+    Hint = "💡",
+    Info = "ℹ️",
   },
   git = {
-    added = " ",
-    modified = " ",
-    removed = " ",
+    added = "❇️",
+    modified = "📝",
+    removed = "❌",
   },
   kinds = {
     Array = " ",

@@ -33,11 +33,36 @@ return {
       component_separators = { left = "", right = "" },
       section_separators = { left = "", right = "" },
       globalstatus = true,
-      disabled_filetypes = {},
+      disabled_filetypes = {
+        statusline = { "dashboard", "lazy" },
+        winbar = {
+          "dap-repl",
+          "dapui_breakpoints",
+          "dapui_console",
+          "dapui_scopes",
+          "dapui_stacks",
+          "dapui_watches",
+          "dashboard",
+          "help",
+          "neogitstatus",
+          "qf",
+          "startify",
+          "toggleterm",
+        },
+      },
+      always_divide_middle = true,
     },
 
     sections = {
-      lualine_a = { "mode" },
+      lualine_a = {
+        {
+          "filename",
+          symbols = {
+            readonly = "[🔒]",
+          },
+        },
+        "mode",
+      },
       lualine_b = {
         {
           "branch",
@@ -52,7 +77,12 @@ return {
             end
           end,
         },
-        "diagnostics",
+
+        {
+          "diagnostics",
+          sources = { "nvim_diagnostic" },
+          symbols = { error = "⛔ ", warn = "⚠️ ", info = "ℹ️ ", hint = "💡" },
+        },
         {
           "diff",
           symbols = {
@@ -66,7 +96,7 @@ return {
         { folder, color = { gui = "bold" }, separator = "/", padding = { left = 1, right = 0 } },
         { "filename", path = 1, padding = { left = 0, right = 1 } },
       },
-      lualine_x = { "encoding", "lsp_status" },
+      lualine_x = { "encoding", { "lsp_status", icon = "📡" } },
       lualine_y = { "progress" },
       lualine_z = { "location" },
     },

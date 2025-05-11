@@ -14,7 +14,7 @@ vim.keymap.set("v", "<leader>y", '"+y', { desc = 'Yank into " register' })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = 'Yank into " register' })
 
 -- close buffer
-vim.keymap.set("n", "<leader>x", "<cmd>bd<CR>", { desc = "Close Buffer" })
+vim.keymap.set("n", "<leader>x", "<cmd>q<CR>", { desc = "Close Buffer" })
 -- Replace word under cursor across entire buffer
 vim.keymap.set(
   "n",
@@ -468,7 +468,7 @@ function M.setup_snacks_keymaps()
       function()
         Snacks.picker.lsp_definitions()
       end,
-      desc = "Goto Definition",
+      desc = "[G]oto [D]efinition",
     },
     {
       "gD",

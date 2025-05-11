@@ -93,7 +93,7 @@ return {
         colors.git.change = "yellow"
         colors.git.delete = "red"
         colors.bg = "black"
-        colors.bg_statusline = "#001440"
+        -- colors.bg_statusline = "#001440"
       end,
       on_highlights = function(highlights)
         -- Set cursor color, these will be called by the "guicursor" option in
