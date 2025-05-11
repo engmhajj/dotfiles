@@ -5,29 +5,34 @@ return {
     lazy = true,
     dependencies = {
       {
+        -- Required dependency for nvim-dap-ui
+        "nvim-neotest/nvim-nio",
+        -- Installs the debug adapters for you
+        "williamboman/mason.nvim",
         "jay-babu/mason-nvim-dap.nvim",
-        dependencies = {
-          "williamboman/mason.nvim",
-        },
+
         cmd = { "DapInstall", "DapUninstall" },
-        opts = {
-          -- Makes a best effort to setup the various debuggers with
-          -- reasonable debug configurations
-          automatic_installation = true,
-
-          -- You can provide additional configuration to the handlers,
-          -- see mason-nvim-dap README for more information
-          handlers = {},
-
-          -- You'll need to check that you have the required things installed
-          -- online, please don't ask me how to install them :)
-          ensure_installed = {
-            -- Update this to ensure that you have the debuggers for the langs you want
-          },
-        },
       },
     },
     config = function(_, opts)
+      local dap = require("dap")
+      local dapui = require("dapui")
+      require("mason-nvim-dap").setup({
+        -- Makes a best effort to setup the various debuggers with
+        -- reasonable debug configurations
+        automatic_installation = true,
+
+        -- You can provide additional configuration to the handlers,
+        -- see mason-nvim-dap README for more information
+        handlers = {},
+
+        -- You'll need to check that you have the required things installed
+        -- online, please don't ask me how to install them :)
+        ensure_installed = {
+          -- Update this to ensure that you have the debuggers for the langs you want
+          -- 'delve',
+        },
+      })
       -- Set nice color highlighting at the stopped line
       -- vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
@@ -47,6 +52,35 @@ return {
         local merged = require("fredrik.utils.table").deep_merge(dap.configurations, opts.configurations)
         dap.configurations = merged
       end
+      dap.listeners.after.event_initialized["dapui_config"] = dapui.open
+      dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+      dap.listeners.before.event_exited["dapui_config"] = dapui.close
+      -- local dap_utils = require 'user.plugins.configs.dap.utils'
+      local BASH_DEBUG_ADAPTER_BIN = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter"
+      local BASHDB_DIR = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir"
+      dap.adapters.sh = {
+        type = "executable",
+        command = BASH_DEBUG_ADAPTER_BIN,
+      }
+      dap.configurations.sh = {
+        {
+          name = "Launch Bash debugger",
+          type = "sh",
+          request = "launch",
+          program = "${file}",
+          cwd = "${fileDirname}",
+          pathBashdb = BASHDB_DIR .. "/bashdb",
+          pathBashdbLib = BASHDB_DIR,
+          pathBash = "bash",
+          pathCat = "cat",
+          pathMkfifo = "mkfifo",
+          pathPkill = "pkill",
+          env = {},
+          args = {},
+          -- showDebugOutput = true,
+          -- trace = true,
+        },
+      }
     end,
     keys = require("fredrik.config.keymaps").setup_dap_keymaps(),
   },
@@ -92,22 +126,7 @@ return {
       },
     },
     opts = {},
-    config = function(_, opts)
-      -- setup dap config by VsCode launch.json file
-      -- require("dap.ext.vscode").load_launchjs()
-      local dap = require("dap")
-      local dapui = require("dapui")
-      dapui.setup(opts)
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open({})
-      end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close({})
-      end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close({})
-      end
-    end,
+
     keys = require("fredrik.config.keymaps").setup_dap_ui_keymaps(),
   },
 }

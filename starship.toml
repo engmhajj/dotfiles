@@ -86,7 +86,7 @@ format = 'on [$symbol$active]($style) '
 symbol = " "
 
 [git_status]
-format = '➜ 【[($all_status$ahead_behind)](fg:color_fg0)】'
+format = '➜【[($all_status$ahead_behind)](fg:color_fg0)】'
 untracked = '[$count❓](fg:color_fg0)'
 staged = '[$count✅ ](fg:color_fg0)'
 stashed = "[ ](cyan) (fg:color_fg0)"

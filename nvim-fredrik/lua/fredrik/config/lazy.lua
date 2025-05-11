@@ -24,11 +24,6 @@ require("lazy").setup({
     { import = "fredrik.plugins.core" },
   },
 
-  dev = {
-    path = "~/code/public",
-    fallback = true, -- Fallback to git when local plugin doesn't exist
-  },
-
   -- import per-project config
   -- NOTE: this is built into lazy.nvim; place a .lazy.lua file in the project's
   -- root directory, containing a lazy spec and it will be merged in at the end of the above spec.
@@ -49,5 +44,48 @@ require("lazy").setup({
         "zipPlugin",
       },
     },
+  },
+}, {
+  ui = {
+    -- If you are using a Nerd Font: set icons to an empty table which will use the
+    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = "⌘",
+      config = "🛠",
+      event = "📅",
+      ft = "📂",
+      init = "⚙",
+      keys = "🗝",
+      plugin = "🔌",
+      runtime = "💻",
+      require = "🌙",
+      source = "📄",
+      start = "🚀",
+      task = "📌",
+      lazy = "💤 ",
+    },
+    size = { width = 0.8, height = 0.8 },
+    border = "rounded",
+  },
+  install = {
+    colorscheme = { "tokyonight" },
+  },
+  checker = {
+    enabled = true,
+    notify = false,
+    frequency = 3600,
+  },
+  performance = {
+    rtp = {
+      ---@type string[] list any plugins you want to disable here
+      disabled_plugins = {
+        -- 'matchparen',
+        -- "netrwPlugin",
+      },
+    },
+  },
+  dev = {
+    path = "~/code/public",
+    fallback = true, -- Fallback to git when local plugin doesn't exist
   },
 })

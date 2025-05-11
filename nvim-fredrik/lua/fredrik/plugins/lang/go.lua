@@ -1,3 +1,7 @@
+if true then
+  return {}
+end
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "go", "gomod", "gowork" },
   callback = function()
@@ -305,7 +309,7 @@ return {
     "ray-x/go.nvim",
     lazy = true,
     ft = { "go", "gomod" },
-    enabled = false,
+    enabled = true,
     dependencies = { -- optional packages
       "ray-x/guihua.lua",
       "virtual-lsp-config",

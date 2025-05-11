@@ -56,12 +56,41 @@ return {
     sections = {
       lualine_a = {
         {
-          "filename",
+          "hostname",
           symbols = {
             readonly = "[🔒]",
           },
         },
         "mode",
+        {
+          "buffers",
+          show_filename_only = true,
+          hide_filename_extension = true, -- Hide filename extension when set to true.
+          show_modified_status = true,
+          mode = 2,
+          max_length = vim.o.columns * 0.5,
+          -- buffers_color = {
+          --   -- Same values as the general color option can be used here.
+          --   active = "#00ff00", -- Color for active buffer.
+          --   inactive = "lualine_{section}_inactive", -- Color for inactive buffer.
+          -- },
+
+          symbols = {
+            modified = "✏️", -- Text to show when the buffer is modified
+            alternate_file = "🔀", -- Text to show to identify the alternate file
+            directory = "", -- Text to show when the buffer is a directory
+          },
+          filetype_names = {
+            TelescopePrompt = "Telescope",
+            fzf = "FZF",
+            fzf_list = "FZF",
+            fzf_lua = "FZF",
+            lazy = "Lazy",
+            lazyterm = "LazyTerm",
+            NvimTree = "NvimTree",
+            startify = "Startify",
+          },
+        },
       },
       lualine_b = {
         {
@@ -94,7 +123,6 @@ return {
       },
       lualine_c = {
         { folder, color = { gui = "bold" }, separator = "/", padding = { left = 1, right = 0 } },
-        { "filename", path = 1, padding = { left = 0, right = 1 } },
       },
       lualine_x = { "encoding", { "lsp_status", icon = "📡" } },
       lualine_y = { "progress" },

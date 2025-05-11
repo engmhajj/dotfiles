@@ -1,3 +1,6 @@
+if true then
+  return {}
+end
 vim.filetype.add({
   extension = {
     gotmpl = "gotmpl",

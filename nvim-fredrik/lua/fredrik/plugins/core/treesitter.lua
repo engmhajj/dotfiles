@@ -8,7 +8,7 @@ return {
       local defaults = {
         auto_install = true,
         ensure_installed = { "diff", "regex", "markdown_inline", "http" },
-        highlight = { enable = true },
+        highlight = { enable = true, additional_vim_regex_highlighting = { "ruby" } },
         indent = { enable = true },
       }
       local merged = require("fredrik.utils.table").deep_merge(defaults, opts)

@@ -2,11 +2,14 @@ return {
 
   {
     "saghen/blink.cmp",
-    lazy = false, -- lazy loading handled internally
+    enabled = vim.g.cmp_engine ~= "cmp",
+    -- lazy = false, -- lazy loading handled internally
+    event = { "InsertEnter", "CmdlineEnter" },
     version = "*",
     dependencies = {
       -- NOTE: https://github.com/Saghen/blink.compat is also available
       "rafamadriz/friendly-snippets",
+      "Kaiser-Yang/blink-cmp-avante",
     },
 
     -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
@@ -32,19 +35,56 @@ return {
             auto_insert = false,
           },
         },
+        menu = {
+          border = "rounded",
+          max_height = 12,
+          draw = {
+            columns = {
+              { "kind_icon" },
+              { "label", "label_description", "source_name", gap = 1 },
+            },
+            components = {
+              kind_icon = {
+                text = function(ctx)
+                  if ctx.source_id == "cmdline" then
+                    return
+                  end
+                  return ctx.kind_icon .. ctx.icon_gap
+                end,
+              },
+              label = { width = { fill = false } }, -- default is true
+              label_description = {
+                width = { fill = true },
+              },
+              source_name = {
+                text = function(ctx)
+                  if ctx.source_id == "cmdline" then
+                    return
+                  end
+                  return ctx.source_name:sub(1, 4)
+                end,
+              },
+            },
+
+            treesitter = { "lsp" },
+          },
+        },
         documentation = {
           auto_show = true,
-        },
-        menu = {
-          draw = {
-            treesitter = { "lsp" },
+          window = {
+            border = "rounded",
           },
         },
       },
       signature = {
         enabled = true, -- experimental, can also be provided by noice
+        window = {
+          show_documentation = true,
+          border = "rounded",
+        },
       },
       appearance = {
+        nerd_font_variant = "normal",
         kind_icons = require("fredrik.utils.icons").icons.kinds,
       },
       -- default list of enabled providers defined so that you can extend it
@@ -79,5 +119,49 @@ return {
     config = function(_, opts)
       require("blink.cmp").setup(opts)
     end,
+  },
+  -- lazydev
+  {
+    "saghen/blink.cmp",
+    opts = {
+      sources = {
+        -- add lazydev to your completion providers
+        default = { "lazydev" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100, -- show at a higher priority than lsp
+          },
+        },
+      },
+    },
+  },
+  {
+    "Kaiser-Yang/blink-cmp-git",
+    lazy = true,
+    enabled = vim.g.cmp_engine ~= "cmp",
+  },
+  {
+    "saghen/blink.cmp",
+    opts = {
+      sources = {
+        -- add lazydev to your completion providers
+        default = { "git" },
+        providers = {
+          git = {
+            module = "blink-cmp-git",
+            name = "Git",
+            should_show_items = function()
+              return vim.o.filetype == "gitcommit" or vim.o.filetype == "markdown"
+            end,
+            opts = {
+              use_items_pre_cache = false,
+              -- options for the blink-cmp-git
+            },
+          },
+        },
+      },
+    },
   },
 }

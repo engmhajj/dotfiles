@@ -103,7 +103,7 @@ add_to_path prepend "$DOTFILES/shell/bin" # personal and custom scripts
 # shellcheck disable=SC1090
 if [ -f "$HOME/.shell/.env" ]; then
   set -a
-  source $HOME/.shell/.env
+  source "$HOME/.shell/.env"
   set +a
 else
   echo "Warning: $HOME/.shell/.env does not exist"
