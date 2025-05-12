@@ -315,11 +315,11 @@ function M.setup_telescope_keymaps()
 
   return {
     {
-      "<leader>sf",
+      "<leader>sp",
       function()
         open_file_in_other_project(false)
       end,
-      desc = "[s]earch [f]ile (in projects)",
+      desc = "[s]earch [P]rojects (in projects)",
     },
 
     -- yank
@@ -538,7 +538,7 @@ function M.setup_snacks_keymaps()
       desc = "[s]earch [a]utocommands",
     },
     {
-      "<leader>,",
+      "<leader>sb",
       function()
         Snacks.picker.buffers()
       end,
@@ -594,7 +594,7 @@ function M.setup_snacks_keymaps()
       desc = "[s]earch [j]umplist",
     },
     {
-      "<leader>sp",
+      "<leader>sz",
       function()
         Snacks.picker.zoxide()
       end,
@@ -613,6 +613,11 @@ function M.setup_snacks_keymaps()
         Snacks.picker.qflist()
       end,
       desc = "[s]earch [q]uickfix List",
+    },
+    {
+      "<leader>sf",
+      "<cmd>Telescope find_files<cr>",
+      desc = "[s]earch [F]iles",
     },
     {
       "<leader>sF",
@@ -656,7 +661,13 @@ function M.setup_snacks_keymaps()
       end,
       desc = "[s]earch [T]odo/Fix/Fixme",
     },
-
+    {
+      "<leader>sw",
+      function()
+        Snacks.picker.grep_word()
+      end,
+      desc = "[s]earch [C]urrent [W]ord",
+    },
     -- git
     {
       "<leader>sgl",

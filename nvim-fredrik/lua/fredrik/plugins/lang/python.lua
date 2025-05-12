@@ -117,10 +117,10 @@ return {
           -- ref: https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/configs/ruff.lua
           cmd = { "ruff", "server" },
           filetypes = { "python" },
-          root_markers = root_files,
-          root_dir = (function()
-            return vim.fs.root(0, root_files)
-          end)(),
+          root_markers = { ".git" },
+          -- root_dir = (function()
+          --   return vim.fs.root(0, root_files)
+          -- end)(),
           on_attach = function(client, bufnr)
             if client.name == "ruff" then
               -- Disable hover in favor of Pyright
