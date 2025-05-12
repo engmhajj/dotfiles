@@ -89,11 +89,13 @@ return {
       },
       lualine_bold = true,
       on_colors = function(colors)
+        -- colors.bg_float = "#000000"
         colors.border_highlight = colors.blue
         colors.git.add = "green"
         colors.git.change = "yellow"
         colors.git.delete = "red"
-        -- colors.bg = "black"
+        colors.bg = "#000000"
+        colors.border = "green"
         -- colors.bg_statusline = "#001440"
       end,
       on_highlights = function(hl, c)

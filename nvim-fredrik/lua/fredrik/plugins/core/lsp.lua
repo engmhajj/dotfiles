@@ -18,19 +18,19 @@ local function extend_capabilities(servers)
     servers[server].capabilities = extended_capabilities
   end
 
-  -- FIXME: workaround for https://github.com/neovim/neovim/issues/28058
-  --   if servers["gopls"] ~= nil then
-  --     local server_opts = servers["gopls"]
-  --     for _, v in pairs(server_opts) do
-  --       if type(v) == "table" and v.workspace then
-  --         -- vim.notify(vim.inspect("Disabling workspace/didChangeWatchedFiles for " .. server), vim.log.levels.INFO)
-  --         v.workspace.didChangeWatchedFiles = {
-  --           dynamicRegistration = false,
-  --           relativePatternSupport = false,
-  --         }
-  --       end
-  --     end
-  --   end
+  --   -- FIXME: workaround for https://github.com/neovim/neovim/issues/28058
+  -- --   if servers["gopls"] ~= nil then
+  -- --     local server_opts = servers["gopls"]
+  -- --     for _, v in pairs(server_opts) do
+  -- --       if type(v) == "table" and v.workspace then
+  -- --         -- vim.notify(vim.inspect("Disabling workspace/didChangeWatchedFiles for " .. server), vim.log.levels.INFO)
+  -- --         v.workspace.didChangeWatchedFiles = {
+  -- --           dynamicRegistration = false,
+  -- --           relativePatternSupport = false,
+  -- --         }
+  -- --       end
+  -- --     end
+  -- --   end
 end
 
 --- Ensure LSP binaries are installed with mason-lspconfig.

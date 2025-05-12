@@ -124,7 +124,27 @@ return {
       lualine_c = {
         { folder, color = { gui = "bold" }, separator = "/", padding = { left = 1, right = 0 } },
       },
-      lualine_x = { "encoding", { "lsp_status", icon = "📡" } },
+      lualine_x = {
+        {
+          function()
+            return require("auto-session.lib").current_session_name(true)
+          end,
+          cond = function()
+            return vim.g.custom_lualine_show_session_name
+          end,
+        },
+        "encoding",
+        { "lsp_status", icon = "📡" },
+        {
+          function()
+            return "recording @" .. vim.fn.reg_recording()
+          end,
+          cond = function()
+            return vim.fn.reg_recording() ~= ""
+          end,
+          color = { fg = "#ff007c" },
+        },
+      },
       lualine_y = { "progress" },
       lualine_z = { "location" },
     },

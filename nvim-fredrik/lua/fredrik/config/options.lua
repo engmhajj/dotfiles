@@ -61,8 +61,11 @@ vim.opt.termguicolors = true
 -- sign column
 vim.opt.signcolumn = "yes"
 
+-- Enable wrapping of long lines
+vim.opt.wrap = true
+
 -- cursor line highlight
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 vim.opt.guicursor = {
   "n-v-c-sm:block-Cursor", -- Use 'Cursor' highlight for normal, visual, and command modes
   "i-ci-ve:ver25-lCursor", -- Use 'lCursor' highlight for insert and visual-exclusive modes
@@ -134,6 +137,17 @@ end
 if vim.fn.getenv("TERM_PROGRAM") == "ghostty" then
   vim.opt.title = true
   vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')}"
+end
+
+-- Sets how neovim will display certain whitespace characters in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+if vim.fn.has("nvim-0.11") == 1 then
+  -- Rounded borders by default on >= 0.11
+  vim.o.winborder = "rounded"
 end
 
 return M

@@ -14,7 +14,7 @@ vim.keymap.set("v", "<leader>y", '"+y', { desc = 'Yank into " register' })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = 'Yank into " register' })
 
 -- close buffer
-vim.keymap.set("n", "<leader>x", "<cmd>q<CR>", { desc = "Close Buffer" })
+vim.keymap.set("n", "<C-x>", "<cmd>q<CR>", { desc = "Close Buffer" })
 -- Replace word under cursor across entire buffer
 vim.keymap.set(
   "n",
@@ -74,7 +74,7 @@ end
 for _, key in ipairs({ "<S-h>", "<leader>bp", "[b" }) do
   vim.keymap.set("n", key, "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 end
-vim.keymap.set("n", "<leader>bq", "<cmd>bd %<cr>", { desc = "Delete buffer" })
+vim.keymap.set("n", "<leader>q", "<cmd>bd %<cr>", { desc = "Delete buffer" })
 vim.keymap.set("n", "<leader>bo", function()
   local visible = {}
   for _, win in pairs(vim.api.nvim_list_wins()) do
@@ -1326,7 +1326,7 @@ end
 function M.setup_venv_selector_keymaps()
   return {
     { "<leader>vs", "<cmd>VenvSelect<cr>" },
-    { "<leader>vc", "<cmd>VenvSelectCached<cr>" },
+    -- { "<leader>vd", require("venv-selector").deactivate() },
   }
 end
 

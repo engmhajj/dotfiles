@@ -243,12 +243,21 @@ return {
     ft = { "python" },
     branch = "regexp", -- https://github.com/linux-cultist/venv-selector.nvim/tree/regexp
     dependencies = {
-      "virtual-lsp-config",
-      "nvim-telescope/telescope.nvim",
-      "mfussenegger/nvim-dap-python",
+      "neovim/nvim-lspconfig",
+      "mfussenegger/nvim-dap",
+      "mfussenegger/nvim-dap-python", --optional
+      { "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } },
     },
     opts = {
       notify_user_on_venv_activation = true,
+      search = {
+        find_code_venvs = {
+          command = "fd python$ ~/code/PythonProjects/ --full-path",
+        },
+        -- my_venvs = {
+        --   command = "fd python$ ~/code --full-path",
+        -- },
+      },
     },
     keys = require("fredrik.config.keymaps").setup_venv_selector_keymaps(),
   },

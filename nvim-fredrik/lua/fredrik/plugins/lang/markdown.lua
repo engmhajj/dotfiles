@@ -13,7 +13,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      ensure_installed = { "markdown", "markdown_inline", "tex", "latex" },
+      ensure_installed = { "markdown", "markdown_inline", "tex", "latex" , "pdflatex"},
     },
   },
 
@@ -24,7 +24,7 @@ return {
         "williamboman/mason.nvim",
         opts = function(_, opts)
           opts.ensure_installed = opts.ensure_installed or {}
-          vim.list_extend(opts.ensure_installed, { "prettier", "mdformat", "markdown-toc" })
+          vim.list_extend(opts.ensure_installed, { "prettier", "mdformat", "markdown-toc", "tectonic" })
         end,
       },
     },

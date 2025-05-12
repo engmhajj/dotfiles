@@ -17,6 +17,7 @@ return {
     config = function(_, opts)
       local dap = require("dap")
       local dapui = require("dapui")
+
       require("mason-nvim-dap").setup({
         -- Makes a best effort to setup the various debuggers with
         -- reasonable debug configurations
@@ -46,8 +47,9 @@ return {
           numhl = sign[3],
         })
       end
+      -- setup dap config by VsCode launch.json file
+      -- require("dap.ext.vscode").load_launchjs()
 
-      local dap = require("dap")
       if opts.configurations ~= nil then
         local merged = require("fredrik.utils.table").deep_merge(dap.configurations, opts.configurations)
         dap.configurations = merged
