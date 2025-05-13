@@ -30,6 +30,9 @@ return {
         -- You'll need to check that you have the required things installed
         -- online, please don't ask me how to install them :)
         ensure_installed = {
+          "bash-debug-adapter",
+          "coreclr-debug-adapter",
+          "netcoredbg",
           -- Update this to ensure that you have the debuggers for the langs you want
           -- 'delve',
         },
@@ -58,8 +61,12 @@ return {
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
       -- local dap_utils = require 'user.plugins.configs.dap.utils'
-      local BASH_DEBUG_ADAPTER_BIN = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter"
-      local BASHDB_DIR = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir"
+      local BASH_DEBUG_ADAPTER_BIN = vim.fn.expand(
+        "~/.local/share/fredrik/mason/packages/bash-language-server/node_modules/.bin/bash-language-server"
+      )
+      local BASHDB_DIR = vim.fn.expand(
+        "~/.local/share/fredrik/mason/packages/bash-language-server/node_modules/bash-language-server/node_modules/.bin/semver"
+      )
       dap.adapters.sh = {
         type = "executable",
         command = BASH_DEBUG_ADAPTER_BIN,

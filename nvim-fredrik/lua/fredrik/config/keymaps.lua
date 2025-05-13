@@ -1,5 +1,22 @@
 M = {}
 
+--Dotnet key maps
+--
+vim.keymap.set("n", "<leader>rR", "<cmd>!dotnet run<CR>", { desc = "[D]otnet Run" })
+vim.keymap.set("n", "<leader>rb", "<cmd>!dotnet build<CR>", { desc = "[D]otnet [B]uild" })
+vim.keymap.set("n", "<leader>rA", "<cmd>DotnetUI project reference add<CR>", { desc = "[D]otnet [A]dd reference" })
+vim.keymap.set(
+  "n",
+  "<leader>rD",
+  "<cmd>DotnetUI project reference remove<CR>",
+  { desc = "[D]otnet [R]emove reference" }
+)
+vim.keymap.set("n", "<leader>ra", "<cmd>DotnetUI project package add<CR>", { desc = "[D]otnet [A]dd package" })
+vim.keymap.set("n", "<leader>rd", "<cmd>DotnetUI project package remove<CR>", { desc = "[D]otnet [R]emove package" })
+vim.keymap.set("n", "<leader>rf", "<cmd>DotnetUI file bootstrap<CR>", { desc = "[D]otnet [N]ew cs file" })
+vim.keymap.set("n", "<leader>rt", "<cmd>:DotnetUI new_item<CR>", { desc = "[D]otnet [N]ew project template" })
+vim.keymap.set("n", "<C-b>", ":lua vim.g.dotnet_build_project()<CR>", { noremap = true, silent = true })
+
 -- Exit insert mode without hitting Esc
 vim.keymap.set("i", "jj", "<Esc><Esc>", { desc = "Esc" })
 
@@ -341,7 +358,7 @@ end
 
 function M.setup_coderunner_keymaps()
   return {
-    { "<leader>rf", ":RunFile term<CR>", desc = "Run file" },
+    { "<leader>rr", ":RunFile term<CR>", desc = "Run file" },
   }
 end
 

@@ -40,7 +40,8 @@ return {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-
+      "issafalcon/neotest-dotnet",
+      { "stevanfreeborn/neotest-playwright", branch = "fork" },
       "nvim-neotest/neotest-plenary",
       "nvim-neotest/neotest-vim-test",
     },

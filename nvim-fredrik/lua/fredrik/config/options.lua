@@ -1,5 +1,8 @@
 M = {}
 
+vim.opt.textwidth = 100 -- command 'gw' formats text to this width
+vim.opt.colorcolumn = "100"
+
 -- leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
