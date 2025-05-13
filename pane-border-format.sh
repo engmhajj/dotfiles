@@ -102,4 +102,4 @@ git_prompt() {
 }
 
 # final output
-echo "📁$PRETTY_PATH $(cd $PANE_CURRENT_PATH && git_prompt)🔢#{[#{pane_index}]↬#{pane_title}}"
+echo "👨🏻‍🦰$PRETTY_PATH $(cd $PANE_CURRENT_PATH && git_prompt) #{[#{pane_index}]↬#{pane_title}}"
