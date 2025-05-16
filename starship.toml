@@ -1,6 +1,6 @@
 
 
-
+"$schema" = 'https://starship.rs/config-schema.json'
 # Inserts a blank line between shell prompts
 add_newline = true
 
@@ -51,7 +51,7 @@ symbol = " "
 symbol = " "
 
 [directory]
-style = '#04d1f9 bold'
+style = 'fg:#04d1f9 bold'
 # style = "fg:color_fg0 bg:color_yellow"
 format = "📁[$path ]($style)"
 truncation_length = 3
@@ -139,7 +139,7 @@ symbol = " "
 
 [os]
 disabled = false
-style = "fg:color_fg0"
+style = "fg:color_bg1"
 format = "[($symbol $name $type$codename$edition$version)]($style)"
 
 
@@ -191,6 +191,7 @@ symbol = "󰏗 "
 symbol = " "
 
 [python]
+style = "fg:color_bg3"
 symbol = " "
 
 [rlang]
@@ -208,7 +209,7 @@ symbol = " "
 
 [character]
 disabled = false
-success_symbol = '[⚡️❯❯❯❯](bold fg:#04d1f9 )'
+success_symbol = '[❯❯❯❯](bold fg:#04d1f9 )'
 error_symbol = '[💀 XXXX](bold fg:color_red)'
 vimcmd_symbol = '[󰄛 ❮❮❮❮](bold fg:color_green)'
 vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
@@ -217,7 +218,7 @@ vimcmd_visual_symbol = '[](bold fg:color_yellow)'
 
 [shell]
 fish_indicator = '󰈺 '
-zsh_indicator = ' 👉🏼 zsh'
+zsh_indicator = ' ⚡️ zsh'
 powershell_indicator = '_'
 unknown_indicator = 'mystery shell'
 style = 'fg:color_purple bold'
