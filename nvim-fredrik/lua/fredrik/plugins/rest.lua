@@ -8,7 +8,7 @@ return {
     -- https://github.com/jellydn/hurl.nvim
     -- https://github.com/mistweaverco/kulala.nvim
     lazy = true,
-    enabled = false,
+    enabled = true,
     dependencies = {
       {
         "vhyrro/luarocks.nvim",
@@ -35,6 +35,42 @@ return {
         highlight = {
           enabled = true,
           timeout = 150,
+        },
+        ---@class rest.Config.Response
+        response = {
+          ---Default response hooks
+          ---@class rest.Config.Response.Hooks
+          hooks = {
+            ---@type boolean Decode the request URL segments on response UI to improve readability
+            decode_url = true,
+            ---@type boolean Format the response body using `gq` command
+            format = true,
+          },
+        },
+        ---@class rest.Config.Env
+        env = {
+          ---@type boolean
+          enable = true,
+          ---@type string
+          pattern = ".*%.env.*",
+          ---@type fun():string[]
+          find = function()
+            local config = require("rest-nvim.config")
+            return vim.fs.find(function(name, _)
+              return name:match(config.env.pattern)
+            end, {
+              path = vim.fn.getcwd(),
+              type = "file",
+              limit = math.huge,
+            })
+          end,
+        },
+        ---@class rest.Config.Cookies
+        cookies = {
+          ---@type boolean Whether enable cookies support or not
+          enable = true,
+          ---@type string Cookies file path
+          path = vim.fs.joinpath(vim.fn.stdpath("data") --[[@as string]], "rest-nvim.cookies"),
         },
         result = {
           -- toggle showing URL, HTTP info, headers at top the of result window

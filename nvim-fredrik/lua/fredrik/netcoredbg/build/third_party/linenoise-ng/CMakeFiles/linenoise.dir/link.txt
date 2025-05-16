@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblinenoise.a CMakeFiles/linenoise.dir/src/ConvertUTF.cpp.o CMakeFiles/linenoise.dir/src/linenoise.cpp.o CMakeFiles/linenoise.dir/src/wcwidth.cpp.o
+/opt/homebrew/bin/llvm-ranlib liblinenoise.a

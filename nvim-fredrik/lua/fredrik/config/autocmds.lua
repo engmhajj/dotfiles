@@ -72,6 +72,41 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
   end,
 })
 
+local function augroup(name)
+  return vim.api.nvim_create_augroup("nde_" .. name, { clear = true })
+end
+
+-- windows to close
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("close_with_q"),
+  pattern = {
+    "OverseerForm",
+    "OverseerList",
+    "checkhealth",
+    "floggraph",
+    "fugitive",
+    "git",
+    "help",
+    "lspinfo",
+    "man",
+    "neotest-output",
+    "neotest-summary",
+    "qf",
+    "query",
+    "spectre_panel",
+    "startuptime",
+    "toggleterm",
+    "tsplayground",
+    "vim",
+    "neoai-input",
+    "neoai-output",
+    "notify",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end,
+})
 -- Listen to LSP Attach
 -- vim.api.nvim_create_autocmd("LspAttach", {
 --   callback = function(args)
@@ -91,4 +126,3 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 --     })
 --   end,
 -- })
-

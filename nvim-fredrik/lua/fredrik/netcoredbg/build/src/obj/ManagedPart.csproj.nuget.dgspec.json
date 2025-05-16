@@ -1,0 +1,98 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/mohamadelhajhassan/netcoredbg/src/managed/ManagedPart.csproj": {}
+  },
+  "projects": {
+    "/Users/mohamadelhajhassan/netcoredbg/src/managed/ManagedPart.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/mohamadelhajhassan/netcoredbg/src/managed/ManagedPart.csproj",
+        "projectName": "ManagedPart",
+        "projectPath": "/Users/mohamadelhajhassan/netcoredbg/src/managed/ManagedPart.csproj",
+        "packagesPath": "/Users/mohamadelhajhassan/.nuget/packages/",
+        "outputPath": "/Users/mohamadelhajhassan/netcoredbg/build/src/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/mohamadelhajhassan/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp.Scripting": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.Diagnostics.DbgShim": {
+              "target": "Package",
+              "version": "[*, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "System.IO.FileSystem": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Reflection.Metadata": {
+              "target": "Package",
+              "version": "[1.4.2, )"
+            },
+            "System.Runtime.InteropServices": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/Users/mohamadelhajhassan/netcoredbg/.dotnet/sdk/8.0.409/RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "osx-arm64": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

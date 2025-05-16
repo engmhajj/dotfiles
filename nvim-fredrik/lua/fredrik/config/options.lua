@@ -52,7 +52,8 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- text wrap
-vim.opt.wrap = false
+-- Enable wrapping of long lines
+vim.opt.wrap = true
 vim.opt.linebreak = true -- Wrap lines at convenient points
 
 -- completion
@@ -63,9 +64,6 @@ vim.opt.termguicolors = true
 
 -- sign column
 vim.opt.signcolumn = "yes"
-
--- Enable wrapping of long lines
-vim.opt.wrap = true
 
 -- cursor line highlight
 vim.opt.cursorline = true

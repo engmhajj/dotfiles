@@ -1,3 +1,6 @@
+if not require("fredrik.config").pde.python then
+  return {}
+end
 --- Find the path to the binary in the python virtual environment.
 --- First search active virtual environment, then .venv folder,
 --- then mason and last give up.
@@ -125,6 +128,7 @@ return {
             if client.name == "ruff" then
               -- Disable hover in favor of Pyright
               client.server_capabilities.hoverProvider = false
+              -- client.server_capabilities.inlayHintProvider = false
             end
           end,
           -- HACK: explicitly setting offset encoding:

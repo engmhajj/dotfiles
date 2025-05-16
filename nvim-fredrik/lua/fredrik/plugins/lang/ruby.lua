@@ -1,3 +1,6 @@
+if not require("fredrik.config").pde.ruby then
+  return {}
+end
 return {
   {
     "vim-ruby/vim-ruby",

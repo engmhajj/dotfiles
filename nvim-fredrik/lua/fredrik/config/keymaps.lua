@@ -18,7 +18,7 @@ vim.keymap.set("n", "<leader>rt", "<cmd>:DotnetUI new_item<CR>", { desc = "[D]ot
 vim.keymap.set("n", "<C-b>", ":lua vim.g.dotnet_build_project()<CR>", { noremap = true, silent = true })
 
 -- Exit insert mode without hitting Esc
-vim.keymap.set("i", "jj", "<Esc><Esc>", { desc = "Esc" })
+vim.keymap.set("i", "ii", "<Esc><Esc>", { desc = "Esc" })
 
 -- Select all
 vim.keymap.set("n", "==", "gg<S-v>G")
@@ -1205,7 +1205,7 @@ end
 
 function M.setup_minimap_keymaps()
   return {
-    { "<Leader>um", "<cmd>Neominimap toggle<CR>", desc = "Toggle Mini map" },
+    { "<Leader>um", "<cmd>Neominimap Toggle<CR>", desc = "Toggle Mini map" },
     -- { "<leader>nt", "<cmd>Neominimap toggle<cr>", desc = "Toggle minimap" },
     -- { "<leader>no", "<cmd>Neominimap on<cr>", desc = "Enable minimap" },
     -- { "<leader>nc", "<cmd>Neominimap off<cr>", desc = "Disable minimap" },
@@ -1336,7 +1336,20 @@ end
 
 function M.setup_rest_keymaps()
   return {
-    { "<leader>rr", "<Plug>RestNvim", desc = "Run REST request under cursor" },
+    { "<leader>hr", ":Rest run<CR>", desc = "[R]un REST request under cursor" },
+    { "<leader>ho", ":Rest open<CR>", desc = "[O]pen REST pane" },
+    { "<leader>hl", ":Rest last<CR>", desc = "[R]un LAST request" },
+    { "<leader>hg", ":Rest logs<CR>", desc = "[E]dit LOGS file" },
+    { "<leader>hc", ":Rest cookies<CR>", desc = "[E]dit cookies file" },
+    { "<leader>he", ":Rest env show<CR>", desc = "[Show] dotenv file registered to current .http file" },
+    { "<leader>hs", ":Rest env select<CR>", desc = "[S]elect and register .env file with vim.ui.select" },
+    {
+      "<leader>hu",
+      function()
+        require("telescope").extensions.rest.select_env()
+      end,
+      desc = "[O]pen ui and select .env",
+    },
   }
 end
 

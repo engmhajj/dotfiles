@@ -1,0 +1,7 @@
+# Hashes of file build rules.
+67a71f1e9d67103d85b251e7a87dbcfb src/CMakeFiles/buildinfo
+0ed4fd95a712a472bbaf41cb63877216 src/CMakeFiles/managedpart_dll
+100c532509f5d40aa900fd9aab347ecc src/ManagedPart.dll
+0bc8af100f1fa6e510b4ae233e721fd8 src/errormessage.cpp
+935b6622916429779568cb5d0e923aa3 src/generrmsg/bin/generrmsg.dll
+0d569cca0bc6a9636a6906f0e5157b3c src/generrmsg/generrmsg.csproj

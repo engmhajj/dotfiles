@@ -1,0 +1,7 @@
+/Users/mohamadelhajhassan/netcoredbg/bin/netcoredbg
+/Users/mohamadelhajhassan/netcoredbg/bin/ManagedPart.dll
+/Users/mohamadelhajhassan/netcoredbg/bin/Microsoft.CodeAnalysis.dll
+/Users/mohamadelhajhassan/netcoredbg/bin/Microsoft.CodeAnalysis.CSharp.dll
+/Users/mohamadelhajhassan/netcoredbg/bin/Microsoft.CodeAnalysis.Scripting.dll
+/Users/mohamadelhajhassan/netcoredbg/bin/Microsoft.CodeAnalysis.CSharp.Scripting.dll
+/Users/mohamadelhajhassan/netcoredbg/bin/libdbgshim.dylib

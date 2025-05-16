@@ -1,0 +1,15 @@
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/bin/generrmsg
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/bin/generrmsg.deps.json
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/bin/generrmsg.runtimeconfig.json
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/bin/generrmsg.dll
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/bin/generrmsg.pdb
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/generrmsg.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/generrmsg.AssemblyInfoInputs.cache
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/generrmsg.AssemblyInfo.cs
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/generrmsg.csproj.CoreCompileInputs.cache
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/generrmsg.sourcelink.json
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/generrmsg.dll
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/refint/generrmsg.dll
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/generrmsg.pdb
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/generrmsg.genruntimeconfig.cache
+/Users/mohamadelhajhassan/netcoredbg/build/src/generrmsg/obj/Debug/net8.0/ref/generrmsg.dll

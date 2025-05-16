@@ -102,6 +102,8 @@ return {
       telescope.load_extension("recent_files")
       telescope.load_extension("project")
       telescope.load_extension("yank_history")
+      telescope.load_extension("rest")
+      -- telescope.extensions.rest.select_env()
     end,
     keys = require("fredrik.config.keymaps").setup_telescope_keymaps(),
   },

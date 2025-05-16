@@ -1,3 +1,7 @@
+if not require("fredrik.config").pde.rust then
+  return {}
+end
+
 return {
 
   {

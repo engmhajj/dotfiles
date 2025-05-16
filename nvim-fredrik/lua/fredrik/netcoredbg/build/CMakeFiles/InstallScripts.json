@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/mohamadelhajhassan/netcoredbg/build/cmake_install.cmake",
+		"/Users/mohamadelhajhassan/netcoredbg/build/third_party/linenoise-ng/cmake_install.cmake",
+		"/Users/mohamadelhajhassan/netcoredbg/build/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

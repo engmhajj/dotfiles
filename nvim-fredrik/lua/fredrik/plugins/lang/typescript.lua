@@ -1,3 +1,6 @@
+if not require("fredrik.config").pde.typescript then
+  return {}
+end
 return {
   {
     "stevearc/conform.nvim",

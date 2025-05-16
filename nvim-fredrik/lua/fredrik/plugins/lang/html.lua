@@ -1,3 +1,6 @@
+if not require("fredrik.config").pde.html then
+  return {}
+end
 return {
 
   {

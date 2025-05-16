@@ -133,6 +133,11 @@ return {
             return vim.g.custom_lualine_show_session_name
           end,
         },
+        {
+          "rest",
+          icon = "",
+          fg = "#428890",
+        },
         "encoding",
         { "lsp_status", icon = "📡" },
         {

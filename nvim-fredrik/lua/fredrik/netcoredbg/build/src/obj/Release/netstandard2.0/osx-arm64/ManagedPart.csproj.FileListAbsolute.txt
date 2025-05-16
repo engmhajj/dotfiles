@@ -1,0 +1,11 @@
+/Users/mohamadelhajhassan/netcoredbg/build/src/bin/Release/netstandard2.0/osx-arm64/ManagedPart.deps.json
+/Users/mohamadelhajhassan/netcoredbg/build/src/bin/Release/netstandard2.0/osx-arm64/ManagedPart.dll
+/Users/mohamadelhajhassan/netcoredbg/build/src/bin/Release/netstandard2.0/osx-arm64/ManagedPart.pdb
+/Users/mohamadelhajhassan/netcoredbg/build/src/obj/Release/netstandard2.0/osx-arm64/ManagedPart.csproj.AssemblyReference.cache
+/Users/mohamadelhajhassan/netcoredbg/build/src/obj/Release/netstandard2.0/osx-arm64/ManagedPart.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mohamadelhajhassan/netcoredbg/build/src/obj/Release/netstandard2.0/osx-arm64/ManagedPart.AssemblyInfoInputs.cache
+/Users/mohamadelhajhassan/netcoredbg/build/src/obj/Release/netstandard2.0/osx-arm64/ManagedPart.AssemblyInfo.cs
+/Users/mohamadelhajhassan/netcoredbg/build/src/obj/Release/netstandard2.0/osx-arm64/ManagedPart.csproj.CoreCompileInputs.cache
+/Users/mohamadelhajhassan/netcoredbg/build/src/obj/Release/netstandard2.0/osx-arm64/ManagedPart.sourcelink.json
+/Users/mohamadelhajhassan/netcoredbg/build/src/obj/Release/netstandard2.0/osx-arm64/ManagedPart.dll
+/Users/mohamadelhajhassan/netcoredbg/build/src/obj/Release/netstandard2.0/osx-arm64/ManagedPart.pdb

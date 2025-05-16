@@ -1,0 +1,22 @@
+return {
+  pde = {
+    angular = false,
+    cpp = false,
+    csharp = true,
+    go = false,
+    html = true,
+    java = false,
+    json = true,
+    lua = true,
+    python = false,
+    react = true,
+    rust = false,
+    svelte = true,
+    tailwind = true,
+    typescript = false,
+    vuejs = false,
+    ruby = false,
+    protobuf = false,
+    sql = false,
+  },
+}

@@ -1,3 +1,7 @@
+if not require("fredrik.config").pde.protobuf then
+  return {}
+end
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "proto" },
   callback = function()

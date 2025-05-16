@@ -1,4 +1,4 @@
-if true then
+if not require("fredrik.config").pde.go then
   return {}
 end
 

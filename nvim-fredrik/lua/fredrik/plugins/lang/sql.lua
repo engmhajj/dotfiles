@@ -1,3 +1,7 @@
+if not require("fredrik.config").pde.sql then
+  return {}
+end
+
 local sql_ft = { "sql", "mysql", "plsql" }
 
 return {

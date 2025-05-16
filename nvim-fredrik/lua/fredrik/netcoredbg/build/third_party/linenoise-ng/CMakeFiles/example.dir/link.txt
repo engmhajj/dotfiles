@@ -1,0 +1,1 @@
+/opt/homebrew/bin/clang++  -force_flat_namespace -std=c++14 -std=c++11 -Wall -Wextra -O3 -DNDEBUG -std=c++11 -Wall -Wextra -O3 -fomit-frame-pointer -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/example.dir/tst/example.c.o -o example  liblinenoise.a
