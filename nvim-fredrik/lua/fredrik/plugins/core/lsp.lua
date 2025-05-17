@@ -15,6 +15,7 @@ local function extend_capabilities(servers)
   )
   for server, server_opts in pairs(servers) do
     local extended_capabilities = vim.tbl_deep_extend("force", client_capabilities, server_opts.capabilities or {})
+    extended_capabilities.textDocument.completion.completionItem.snippetSupport = true
     servers[server].capabilities = extended_capabilities
   end
 

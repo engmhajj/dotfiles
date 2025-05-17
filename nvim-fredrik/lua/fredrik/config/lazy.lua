@@ -22,6 +22,7 @@ require("lazy").setup({
     { import = "fredrik.plugins.lang" },
     -- import core configs
     { import = "fredrik.plugins.core" },
+    { import = "fredrik.plugins.lang.csharp" },
   },
 
   -- import per-project config

@@ -1,5 +1,61 @@
 M = {}
 
+-- nvim color
+vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
+
+vim.o.synmaxcol = 200
+
+-- true color support
+vim.g.colorterm = os.getenv("COLORTERM")
+if vim.fn.exists("+termguicolors") == 1 then
+  -- vim.o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
+  -- vim.o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
+  vim.o.termguicolors = true
+end
+
+vim.o.cmdheight = 0
+-- colorscheme pluginconfig -> colorscheme
+vim.o.cursorline = false
+
+vim.o.display = "lastline" -- long lines fit on one line
+vim.o.showmode = false
+vim.o.showmatch = true -- highlight parentheses correspondence
+vim.o.matchtime = 1 -- number of milliseconds to find a pair of parentheses
+vim.o.showcmd = true -- Show command as typed
+vim.o.number = true -- display line number
+vim.o.relativenumber = false
+vim.o.wrap = true -- wrap by screen width
+vim.o.title = false -- don't rewrite title
+vim.o.scrolloff = 5
+vim.o.sidescrolloff = 5
+vim.o.pumheight = 10 -- number of completion suggestions to display
+vim.o.statuscolumn = "%=%{&nu ? v:relnum && mode() != 'i' ? v:relnum : v:lnum : ''} %s%C"
+vim.o.signcolumn = "yes"
+
+-- Fold
+-- vim.o.foldmethod="marker"
+-- vim.o.foldmethod = "manual"
+-- vim.o.foldlevel = 1
+-- vim.o.foldlevelstart = 99
+-- vim.w.foldcolumn = "0:"
+
+-- Cursor style
+-- vim.o.guicursor = "n-v-c-sm:block-Cursor/lCursor-blinkon0,i-ci-ve:ver25-Cursor/lCursor,r-cr-o:hor20-Cursor/lCursor"
+vim.o.cursorlineopt = "number"
+
+-- vim.o.laststatus = 2
+vim.o.laststatus = 3
+vim.o.shortmess = "aItToOF"
+vim.opt.fillchars = {
+  horiz = "━",
+  horizup = "┻",
+  horizdown = "┳",
+  vert = "┃",
+  vertleft = "┫",
+  vertright = "┣",
+  verthoriz = "╋",
+}
+
 vim.opt.textwidth = 100 -- command 'gw' formats text to this width
 vim.opt.colorcolumn = "100"
 
@@ -11,7 +67,7 @@ vim.g.maplocalleader = ","
 vim.opt.undofile = true
 vim.opt.undolevels = 10000
 vim.opt.updatetime = 200 -- Save swap file and trigger CursorHold
-
+vim.opt.autoindent = true
 -- skip startup screen
 vim.opt.shortmess:append("I")
 
@@ -28,10 +84,6 @@ vim.opt.fillchars = {
   -- diff = "·",
   eob = " ",
 }
-
--- line numbers
-vim.opt.number = true
-vim.opt.relativenumber = false
 
 -- set tab and indents defaults (can be overridden by per-language configs)
 vim.opt.tabstop = 4 -- display tabs as 4 spaces
@@ -53,7 +105,6 @@ vim.opt.smartcase = true
 
 -- text wrap
 -- Enable wrapping of long lines
-vim.opt.wrap = true
 vim.opt.linebreak = true -- Wrap lines at convenient points
 
 -- completion

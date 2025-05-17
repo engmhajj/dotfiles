@@ -165,9 +165,17 @@ return {
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
         opts = {
+          fuzzy = { implementation = "prefer_rust_with_warning" },
           sources = {
-            default = { "codecompanion" },
+            default = { "codecompanion", "lsp", "easy-dotnet", "path" },
             providers = {
+              ["easy-dotnet"] = {
+                name = "easy-dotnet",
+                enabled = true,
+                module = "easy-dotnet.completion.blink",
+                score_offset = 10000,
+                async = true,
+              },
               codecompanion = {
                 name = "CodeCompanion",
                 module = "codecompanion.providers.completion.blink",

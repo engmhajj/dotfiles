@@ -19,6 +19,10 @@ return {
 
     ---@class MasonSettings
     opts = {
+      registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+      },
       -- for local development/testing; clone down the mason-registry locally
       -- registries = {
       --   "file:~/code/public/mason-registry",

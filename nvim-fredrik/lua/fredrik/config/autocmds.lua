@@ -120,7 +120,7 @@ vim.api.nvim_create_autocmd("FileType", {
 --
 --         -- If the file is C# then run fix usings
 --         if vim.bo[0].filetype == "cs" then
---           require("csharp").fix_usings()
+--           require("csharpier").fix_usings()
 --         end
 --       end,
 --     })

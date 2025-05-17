@@ -7,8 +7,9 @@ return {
     -- https://github.com/lima1909/resty.nvim
     -- https://github.com/jellydn/hurl.nvim
     -- https://github.com/mistweaverco/kulala.nvim
-    lazy = true,
+    -- lazy = true,
     enabled = true,
+    event = "VeryLazy",
     dependencies = {
       {
         "vhyrro/luarocks.nvim",

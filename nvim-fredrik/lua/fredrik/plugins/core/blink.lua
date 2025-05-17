@@ -89,9 +89,17 @@ return {
       },
       -- default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, via `opts_extend`
+      fuzzy = { implementation = "prefer_rust_with_warning" },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "path", "snippets", "buffer", "easy-dotnet" },
         providers = {
+          ["easy-dotnet"] = {
+            name = "easy-dotnet",
+            enabled = true,
+            module = "easy-dotnet.completion.blink",
+            score_offset = 10000,
+            async = true,
+          },
           path = {
             -- TODO: use custom field and move to respective plugin
             enabled = function()
@@ -159,6 +167,24 @@ return {
               use_items_pre_cache = false,
               -- options for the blink-cmp-git
             },
+          },
+        },
+      },
+    },
+  },
+  {
+    "saghen/blink.cmp",
+    opts = {
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+      sources = {
+        default = { "lsp", "easy-dotnet", "path" },
+        providers = {
+          ["easy-dotnet"] = {
+            name = "easy-dotnet",
+            enabled = true,
+            module = "easy-dotnet.completion.blink",
+            score_offset = 10000,
+            async = true,
           },
         },
       },
