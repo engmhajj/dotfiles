@@ -1,0 +1,40 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lua", "lua", "{320A62D5-474C-7D2B-EFB2-89764F455290}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netcoredbg", "netcoredbg", "{F5843CAA-244B-049B-9A30-C79FD44D0334}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{BCF5F4EC-EDC7-2531-BEC6-C194E8F56806}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{217991AD-4281-5490-4599-B510FA9B7C4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "generrmsg", "lua\netcoredbg\build\src\generrmsg\generrmsg.csproj", "{B71BC318-A555-B27A-D73A-73CCAEAB44A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B71BC318-A555-B27A-D73A-73CCAEAB44A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B71BC318-A555-B27A-D73A-73CCAEAB44A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B71BC318-A555-B27A-D73A-73CCAEAB44A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B71BC318-A555-B27A-D73A-73CCAEAB44A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5EDC9057-FC58-B75C-0039-60FEA919DD8D} = {320A62D5-474C-7D2B-EFB2-89764F455290}
+		{F5843CAA-244B-049B-9A30-C79FD44D0334} = {5EDC9057-FC58-B75C-0039-60FEA919DD8D}
+		{BCF5F4EC-EDC7-2531-BEC6-C194E8F56806} = {F5843CAA-244B-049B-9A30-C79FD44D0334}
+		{217991AD-4281-5490-4599-B510FA9B7C4F} = {BCF5F4EC-EDC7-2531-BEC6-C194E8F56806}
+		{B71BC318-A555-B27A-D73A-73CCAEAB44A0} = {217991AD-4281-5490-4599-B510FA9B7C4F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {441AC8BE-4235-4AD2-AA17-847FF04BA6CA}
+	EndGlobalSection
+EndGlobal

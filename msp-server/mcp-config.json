@@ -1,0 +1,74 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": null
+      },
+      "health": {
+        "url": "http://localhost:8080/health"
+      }
+    },
+    "google-maps": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GOOGLE_MAPS_API_KEY",
+        "mcp/google-maps"
+      ],
+      "env": {
+        "GOOGLE_MAPS_API_KEY": null
+      },
+      "disabled": true
+    },
+    "github.com/modelcontextprotocol/servers/tree/main/src/git": {
+      "command": "uvx",
+      "args": ["mcp-server-git"]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    },
+    "github.com/tavily-ai/tavily-mcp": {
+      "command": "npx",
+      "args": ["-y", "tavily-mcp@0.1.4"],
+      "env": {
+        "TAVILY_API_KEY": null
+      },
+      "disabled": true
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/mohamadelhajhassan/code/public"
+      ]
+    },
+    "github.com/engmhajj/mcp-tools": {
+      "command": "go",
+      "args": [
+        "-C",
+        "/Users/mohamadelhajhassan/code/public/mcp-tools",
+        "run",
+        "./cmd/mcp-tools/main.go"
+      ],
+      "health": {
+        "host": "localhost",
+        "port": 8081
+      }
+    }
+  },
+  "nativeMCPServers": []
+}

@@ -1,6 +1,5 @@
 # dotfiles 🍩
 
-This repos was forked from Fredrik
 
 These are my personal dotfiles. The setup is based on
 [dotbot](https://github.com/anishathalye/dotbot) and aims to be as idempotent as
@@ -13,7 +12,7 @@ possible.
 
 ### Neovim ⌨️
 
-- [nvim-fredrik](nvim-fredrik/README.md)
+- [nvim](nvim/README.md)
 
 ### Git 🐙
 

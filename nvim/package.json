@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@types/node": "^22.15.18"
+  },
+  "dependencies": {
+    "@angular/language-server": "^18.1.2",
+    "typescript": "^5.8.3"
+  }
+}

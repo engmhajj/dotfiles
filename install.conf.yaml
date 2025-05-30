@@ -45,8 +45,8 @@
     ~/.config/skhd/skhdrc:
       path: skhdrc
       if: '[ "$(uname -s)" = "Darwin" ]'
-    ~/.config/fredrik:
-      path: nvim-fredrik
+    ~/.config/nvim:
+      path: nvim
       force: true
     ~/.config/neovide/config.toml: neovide.toml
     ~/.config/zed/settings.json:
@@ -77,11 +77,11 @@
     #   path: _macos/karabiner
     #   create: true
     #   if: '[ "$(uname -s)" = "Darwin" ]'
-    /mnt/c/Users/fredr/.wslconfig:
+    /mnt/c/Users/mohamadelhajhassan/.wslconfig:
       path: _windows/wslconfig
       force: true
       # if /mnt/c/Users/fredr exists
-      if: "[ -d /mnt/c/Users/fredr ]"
+      if: "[ -d /mnt/c/Users/mohamadelhajhassan ]"
 - shell:
     - description: sync dotbot
       command: git submodule sync --recursive
