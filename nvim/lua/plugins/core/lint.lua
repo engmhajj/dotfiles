@@ -29,7 +29,6 @@ return {
       go = { "gofmt" },
       sh = { "shellcheck" },
       gha = { "actionlint" },
-      cs = { "csharpier" },
       razor = { "razor_wrapper" },
     }
 
@@ -57,20 +56,6 @@ return {
       },
     }
 
-    -- C# linter using CSharpier
-    lint.linters.csharpier = {
-      cmd = "csharpier",
-      stdin = true,
-      stream = "stdout",
-      ignore_exitcode = true,
-      args = {
-        "--write-stdout",
-        function(ctx)
-          return safe_filename(ctx)
-        end,
-      },
-    }
-
     -- Razor wrapper linter (fake/placeholder)
     lint.linters.razor_wrapper = {
       cmd = "bash",
@@ -83,6 +68,19 @@ return {
       },
       condition = function(ctx)
         return ctx and vim.fn.fnamemodify(ctx.filename, ":e") == "cshtml"
+      end,
+    }
+
+    -- Override shellcheck linter to exclude SC1017 (carriage return) warning
+    lint.linters.shellcheck = {
+      cmd = "shellcheck",
+      stdin = true,
+      args = function()
+        return {
+          "--format=gcc",
+          "--exclude=SC1017", -- Ignore the carriage return warning
+          "-",
+        }
       end,
     }
 

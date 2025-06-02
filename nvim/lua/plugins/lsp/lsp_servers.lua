@@ -287,8 +287,16 @@ servers.dockerls = {
 
 servers.bashls = {
   cmd = { "bash-language-server", "start" },
-  filetypes = { "sh" },
+  filetypes = { "sh", "bash", "zsh" },
   root_dir = util.root_pattern(".git"),
+  settings = {
+    bashIde = {
+      shellcheck = {
+        -- Ignore carriage return warning SC1017 (and any others you want)
+        exclude = { "SC1017" },
+      },
+    },
+  },
 }
 
 -- 🧱 Infra

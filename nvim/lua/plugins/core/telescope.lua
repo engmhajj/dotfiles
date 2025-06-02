@@ -18,6 +18,9 @@ end
 
 return {
   {
+    "liangxianzhe/floating-input.nvim",
+  },
+  {
     "nvim-telescope/telescope.nvim",
     lazy = true,
     event = "VeryLazy",

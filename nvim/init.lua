@@ -21,7 +21,18 @@ require("config.options")
 -- set auto commands
 require("config.autocmds")
 
--- setup up plugin manager, load plugin configs
+-- ◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+-- ┃          -- setup up plugin manager, load plugin configs          ┃
+-- ◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 require("config.lazy")
 require("config.dadbob")
 require("config.curl-config")
+require("utils.comment_title").setup({
+  style = "fancy",
+  max_width = 80,
+  padding = 10,
+  filetype_styles = {
+    lua = "kawaii",
+    markdown = "markdown",
+  },
+})

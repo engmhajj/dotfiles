@@ -1,36 +1,44 @@
 M = {}
-vim.api.nvim_set_keymap("n", "<leader>n", "<cmd>Telescope buffers<CR>", { noremap = true, silent = true })
---Dotnet key maps
--- --
--- vim.keymap.set("n", "<leader>rR", "<cmd>!dotnet run<CR>", { desc = "[D]otnet Run" })
--- vim.keymap.set("n", "<leader>rb", "<cmd>!dotnet build<CR>", { desc = "[D]otnet [B]uild" })
-vim.keymap.set("n", "<leader>rA", "<cmd>DotnetUI project reference add<CR>", { desc = "[D]otnet [A]dd reference" })
-vim.keymap.set(
-  "n",
-  "<leader>rD",
-  "<cmd>DotnetUI project reference remove<CR>",
-  { desc = "[D]otnet [R]emove reference" }
-)
-vim.keymap.set("n", "<leader>rp", "<cmd>DotnetUI project package add<CR>", { desc = "[D]otnet [A]dd package" })
-vim.keymap.set("n", "<leader>rP", "<cmd>DotnetUI project package remove<CR>", { desc = "[D]otnet [R]emove package" })
-vim.keymap.set("n", "<leader>rf", "<cmd>DotnetUI file bootstrap<CR>", { desc = "[D]otnet [N]ew cs file" })
-vim.keymap.set("n", "<leader>rn", "<cmd>:DotnetUI new_item<CR>", { desc = "[D]otnet [N]ew item or project template" })
--- vim.keymap.set("n", "<C-b>", ":lua vim.g.dotnet_build_project()<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<space>rW", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", { desc = "[A]dd workspace folder" })
-vim.keymap.set(
-  "n",
-  "<space>rx",
-  "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
-  { desc = "Remove workspace folder" }
-)
 
-vim.keymap.set(
-  "n",
-  "<space>rl",
-  "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-  { desc = "List workspace folders" }
-)
---
+local ok, dotnet_utils = pcall(require, "plugins.lang.csharp.dotnet-terminal")
+if not ok then
+  vim.notify("Failed to load dotnet-utils module", vim.log.levels.ERROR)
+  return
+end
+
+vim.api.nvim_create_user_command("DotnetRun", dotnet_utils.run, {})
+vim.api.nvim_create_user_command("DotnetTest", dotnet_utils.test, {})
+vim.api.nvim_create_user_command("DotnetWatch", dotnet_utils.watch, {})
+vim.api.nvim_create_user_command("DotnetListTerminals", dotnet_utils.list_terminals, {})
+vim.api.nvim_create_user_command("DotnetCloseAllTerminals", dotnet_utils.close_all_terminals, {})
+vim.api.nvim_create_user_command("DotnetRunTestsNeotest", dotnet_utils.run_tests_with_neotest, {})
+vim.api.nvim_create_user_command("DotnetOpenTestResults", dotnet_utils.open_test_results_in_telescope, {})
+vim.api.nvim_create_user_command("DotnetShowTestResults", dotnet_utils.show_test_results, {})
+-- Add user command for running all projects
+vim.api.nvim_create_user_command("DotnetRunAll", function()
+  dotnet_utils.run_all("dotnet run")
+end, {})
+-- Keymaps example, adjust to your preference:
+vim.keymap.set("n", "<leader>rt", dotnet_utils.run, { desc = "Dotnet Run" })
+vim.keymap.set("n", "<leader>rT", dotnet_utils.test, { desc = "Run tests (terminal)" })
+vim.keymap.set("n", "<leader>rq", dotnet_utils.open_test_results_in_telescope, { desc = "show test in telescope" })
+vim.keymap.set("n", "<leader>rW", dotnet_utils.watch, { desc = "Dotnet Watch" })
+vim.keymap.set("n", "<leader>rs", dotnet_utils.switch_solution, { desc = "Watch all projects", noremap = true })
+vim.keymap.set("n", "<leader>rl", dotnet_utils.list_terminals, { desc = "Dotnet List Terminals" })
+vim.keymap.set("n", "<leader>rc", dotnet_utils.close_all_terminals, { desc = "Dotnet Close All Terminals" })
+vim.keymap.set("n", "<leader>rn", dotnet_utils.run_tests_with_neotest, { desc = "Run Test with Neotest" })
+-- vim.keymap.set("n", "<leader>rn", dotnet_utils.cycle_terminal, { desc = "Dotnet Cycle Terminals" })
+
+vim.keymap.set("n", "<leader>ra", function()
+  dotnet_utils.run_all("dotnet run")
+end, { desc = "Dotnet run All Projects" })
+vim.keymap.set("n", "<leader>rA", function()
+  dotnet_utils.run_all("dotnet watch run")
+end, { desc = "Dotnet Watch All Projects" })
+
+--============================================
+vim.api.nvim_set_keymap("n", "<leader>n", "<cmd>Telescope buffers<CR>", { noremap = true, silent = true })
+
 -- Exit insert mode without hitting Esc
 -- vim.keymap.set("i", "ii", "<Esc><Esc>", { desc = "Esc" })
 

@@ -109,12 +109,12 @@ for type, icon in pairs(signs) do
 end
 
 -- Optional: keymap to open diagnostic float manually
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>dd",
-  "<cmd>lua vim.diagnostic.open_float()<CR>",
-  { noremap = true, silent = true }
-)
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<leader>dd",
+--   "<cmd>lua vim.diagnostic.open_float()<CR>",
+--   { noremap = true, silent = true }
+-- )
 
 -- Fix conceallevel for JSON files
 vim.api.nvim_create_autocmd("FileType", {

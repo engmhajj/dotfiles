@@ -30,6 +30,7 @@ return {
     event = "BufWritePre",
     opts = {
       formatters_by_ft = {
+        cs = { "csharpier" },
         lua = { "stylua" },
         json = { "biome" },
         jsonc = { "biome" },
@@ -56,6 +57,11 @@ return {
         },
         mdformat = {
           prepend_args = { "--number", "--wrap", "80" },
+        },
+        csharpier = {
+          command = "csharpier",
+          args = { "format", "--write-stdout" },
+          to_srdin = true,
         },
       },
     },

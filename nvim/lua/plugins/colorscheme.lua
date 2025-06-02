@@ -107,11 +107,17 @@ return {
         --   bold = true,
         --   fg = "#ff966c",
         -- }
+
         if vim.o.background == "dark" then
+          hl.TitleFancy = { fg = "#f6c177" }
+          hl.TitleDouble = { fg = "#9ccfd8" }
+          hl.TitleWave = { fg = "#f0a0a0" }
+          hl.itleDiamond = { fg = "#d7827e"}
           -- Use bg.dark from storm (not night) for the cursor line background to make it more subtle
           hl.CursorLine = { bg = "#1f2335" }
           hl.Cursor = { bg = "#F712ff" }
           hl.CursorIM = { bg = "#F712FF" }
+
           -- Diff colors
           -- Brighten changes within a line
           hl.DiffText = { bg = "#224e38" }

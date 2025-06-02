@@ -31,6 +31,11 @@ vim.o.sidescrolloff = 5
 vim.o.pumheight = 10 -- number of completion suggestions to display
 vim.o.statuscolumn = "%=%{&nu ? v:relnum && mode() != 'i' ? v:relnum : v:lnum : ''} %s%C"
 vim.o.signcolumn = "yes"
+vim.opt.wildmenu = false
+vim.opt.cmdheight = 1 -- Avoid redraw bugs with 0
+vim.opt.laststatus = 3 -- Use global statusline
+vim.opt.splitbelow = true -- Terminal opens below
+vim.opt.splitright = true -- Next terminal opens right
 
 -- Fold
 -- vim.o.foldmethod="marker"

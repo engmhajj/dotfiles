@@ -12,6 +12,31 @@ local lsp_status = require("utils.statusline.lsp").status
 local session_name = require("utils.statusline.session").name
 local macro_recording = require("utils.statusline.macro").recording
 local rest_status = require("utils.statusline.rest").status
+-- utils.lua (or define inline)
+local function count_open_buffers()
+  local bufs = vim.api.nvim_list_bufs()
+  local count = 0
+  for _, buf in ipairs(bufs) do
+    if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, "buflisted") then
+      count = count + 1
+    end
+  end
+  return count
+end
+
+-- Winbar component: show buffer name and open buffer count
+local winbar_component = {
+  function()
+    local name = vim.api.nvim_buf_get_name(0)
+    if name == "" then
+      name = "[No Name]"
+    else
+      name = vim.fn.fnamemodify(name, ":t")
+    end
+    return " " .. name .. "   " .. count_open_buffers() .. " buffers"
+  end,
+  color = { fg = "#ff0000", gui = "bold" }, -- Red color
+}
 
 return {
   "nvim-lualine/lualine.nvim",
@@ -45,23 +70,42 @@ return {
         },
       },
       always_divide_middle = true,
+      refresh = {
+        statusline = 1000,
+        tabline = 1000,
+        winbar = 1000,
+      },
+    },
+    inactive_sections = {
+      lualine_a = {},
+      lualine_b = {},
+      lualine_c = { "filename" },
+      lualine_x = { "location" },
+      lualine_y = {},
+      lualine_z = {},
+    },
+    winbar = {
+      lualine_c = { winbar_component },
+    },
+    inactive_winbar = {
+      lualine_c = { winbar_component },
     },
 
     sections = {
       lualine_a = {
         { hostname, icon = "💻" },
         "mode",
-        {
-          "filename",
-          path = 1, -- 0: just the filename, 1: relative path, 2: absolute path
-          shorting_target = 40,
-          symbols = {
-            modified = "✏️ ",
-            readonly = "🔒 ",
-            unnamed = "[No Name]",
-            newfile = "[New File]",
-          },
-        },
+        -- {
+        --   "filename",
+        --   path = 0, -- 0: just the filename, 1: relative path, 2: absolute path
+        --   shorting_target = 40,
+        --   symbols = {
+        --     modified = "✏️ ",
+        --     readonly = "🔒 ",
+        --     unnamed = "[No Name]",
+        --     newfile = "[New File]",
+        --   },
+        -- },
         -- {
         --   "buffers",
         --   show_filename_only = true,
@@ -122,7 +166,18 @@ return {
         },
       },
       lualine_c = {
-        { folder, color = { gui = "bold" }, separator = "/", padding = { left = 1, right = 0 } },
+        {
+          "filename",
+          path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+          symbols = {
+            modified = "✏️ ",
+            readonly = " 🔒",
+            unnamed = "[No Name]",
+            newfile = "[New]",
+          },
+          color = { fg = "#ff0000", gui = "bold" }, -- Bold red
+        },
+        -- { folder, color = { gui = "bold" }, separator = "/", padding = { left = 1, right = 0 } },
       },
       lualine_x = {
         {

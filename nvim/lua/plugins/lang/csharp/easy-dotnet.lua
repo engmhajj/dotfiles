@@ -4,8 +4,52 @@ local function getCurrentFileDirName()
   return dirName
 end
 
-return {
+-- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+--   pattern = { "*.py" },
+--   callback = function()
+--     vim.opt_local.tabstop = 4
+--     vim.opt_local.softtabstop = 4
+--     vim.opt_local.shiftwidth = 4
+--     vim.opt_local.colorcolumn = "88"
+--     vim.opt_local.expandtab = true
+--
+--     vim.opt_local.colorcolumn = "120"
+--   end,
+-- })
 
+return {
+  {
+    "nvim-neotest/neotest",
+    requires = {
+      "Issafalcon/neotest-dotnet",
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("neotest").setup({
+        icons = {
+          passed = "✔️",
+          failed = "❌",
+          running = "🔄",
+          skipped = "⏸️",
+        },
+        status = {
+          enabled = true,
+          virtual_text = true,
+        },
+        adapters = {
+          require("neotest-dotnet")({
+            dap = {
+              adapter_name = "netcoredbg",
+              args = { justMyCode = false },
+            },
+            dotnet_additional_args = { "--verbosity", "detailed" },
+            discovery_root = "solution", -- or "project"
+          }),
+        },
+      })
+    end,
+  },
   {
     "GustavEikaas/easy-dotnet.nvim",
     -- event = "VeryLazy",
@@ -48,18 +92,18 @@ return {
           },
           mappings = {
             vim.keymap.set("n", "<leader>ro", ":Dotnet<CR>", { desc = "[Dot]Net Open", noremap = true, silent = true }),
-            vim.keymap.set(
-              "n",
-              "<leader>rm",
-              create_migration,
-              { desc = "Add Migration", noremap = true, silent = true }
-            ),
-            vim.keymap.set(
-              "n",
-              "<leader>ra",
-              ":Dotnet ef database update<CR>",
-              { desc = "[U]pdate Database", noremap = true, silent = true }
-            ),
+            -- vim.keymap.set(
+            --   "n",
+            --   "<leader>rm",
+            --   create_migration,
+            --   { desc = "Add Migration", noremap = true, silent = true }
+            -- ),
+            -- vim.keymap.set(
+            --   "n",
+            --   "<leader>ru",
+            --   ":Dotnet ef database update<CR>",
+            --   { desc = "[U]pdate Database", noremap = true, silent = true }
+            -- ),
             vim.keymap.set("n", "<leader>re", function()
               dotnet.get_environment_variables(getCurrentFileDirName(), vim.fn.getcwd(), true)
             end, { desc = "[G]et Environment Variable", noremap = true, silent = true }),
