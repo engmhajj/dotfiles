@@ -1,11 +1,30 @@
 return {
   {
+    "nvim-treesitter/playground",
+    cmd = {
+      "TSPlaygroundToggle",
+      "TSHighlightCapturesUnderCursor",
+    },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        playground = {
+          enable = true,
+        },
+      })
+    end,
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter",
     lazy = true,
     event = "BufRead",
     build = ":TSUpdate",
     opts = function(_, opts)
       local defaults = {
+
         auto_install = true,
         ensure_installed = {
           "diff",
@@ -99,6 +118,7 @@ return {
       return require("utils.table").deep_merge(defaults, opts or {})
     end,
     config = function(_, opts)
+      vim.treesitter.language.register("c_sharp", "csharp")
       local configs = require("nvim-treesitter.configs")
       configs.setup(opts)
       require("config.options").treesitter_foldexpr()

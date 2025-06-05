@@ -90,16 +90,16 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 })
 
 -- Diagnostics configuration
-vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  float = {
-    border = "rounded",
-    source = true,
-  },
-})
+-- vim.diagnostic.config({
+--   virtual_text = true,
+--   signs = true,
+--   underline = true,
+--   update_in_insert = false,
+--   float = {
+--     border = "rounded",
+--     source = true,
+--   },
+-- })
 
 -- Define diagnostic signs
 local signs = { Error = "✖", Warn = "⚠", Info = "ℹ", Hint = "💡" }

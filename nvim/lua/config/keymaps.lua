@@ -1,40 +1,94 @@
 M = {}
 
-local ok, dotnet_utils = pcall(require, "plugins.lang.csharp.dotnet-terminal")
-if not ok then
-  vim.notify("Failed to load dotnet-utils module", vim.log.levels.ERROR)
-  return
-end
+-- (*^▽^*)═══════════════════════(^▽^*)
+-- ❖     From Linkarzu     ❖
+-- (^▽^*)═══════════════════════(*^▽^*)
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "[P]Yank to system clipboard" })
+-- Copy the current line and all diagnostics on that line to system clipboard
+vim.keymap.set("n", "yd", function()
+  local pos = vim.api.nvim_win_get_cursor(0)
+  local line_num = pos[1] - 1 -- 0-indexed
+  local line_text = vim.api.nvim_buf_get_lines(0, line_num, line_num + 1, false)[1]
+  local diagnostics = vim.diagnostic.get(0, { lnum = line_num })
+  if #diagnostics == 0 then
+    vim.notify("No diagnostic found on this line", vim.log.levels.WARN)
+    return
+  end
+  local message_lines = {}
+  for _, d in ipairs(diagnostics) do
+    for msg_line in d.message:gmatch("[^\n]+") do
+      table.insert(message_lines, msg_line)
+    end
+  end
+  local formatted = {}
+  table.insert(formatted, "Line:\n" .. line_text .. "\n")
+  table.insert(formatted, "Diagnostic on that line:\n" .. table.concat(message_lines, "\n"))
+  vim.fn.setreg("+", table.concat(formatted, "\n\n"))
+  vim.notify("Line and diagnostic copied to clipboard", vim.log.levels.INFO)
+end, { desc = "[P]Yank line and diagnostic to system clipboard" })
 
-vim.api.nvim_create_user_command("DotnetRun", dotnet_utils.run, {})
-vim.api.nvim_create_user_command("DotnetTest", dotnet_utils.test, {})
-vim.api.nvim_create_user_command("DotnetWatch", dotnet_utils.watch, {})
-vim.api.nvim_create_user_command("DotnetListTerminals", dotnet_utils.list_terminals, {})
-vim.api.nvim_create_user_command("DotnetCloseAllTerminals", dotnet_utils.close_all_terminals, {})
-vim.api.nvim_create_user_command("DotnetRunTestsNeotest", dotnet_utils.run_tests_with_neotest, {})
-vim.api.nvim_create_user_command("DotnetOpenTestResults", dotnet_utils.open_test_results_in_telescope, {})
-vim.api.nvim_create_user_command("DotnetShowTestResults", dotnet_utils.show_test_results, {})
--- Add user command for running all projects
-vim.api.nvim_create_user_command("DotnetRunAll", function()
-  dotnet_utils.run_all("dotnet run")
-end, {})
--- Keymaps example, adjust to your preference:
-vim.keymap.set("n", "<leader>rt", dotnet_utils.run, { desc = "Dotnet Run" })
-vim.keymap.set("n", "<leader>rT", dotnet_utils.test, { desc = "Run tests (terminal)" })
-vim.keymap.set("n", "<leader>rq", dotnet_utils.open_test_results_in_telescope, { desc = "show test in telescope" })
-vim.keymap.set("n", "<leader>rW", dotnet_utils.watch, { desc = "Dotnet Watch" })
-vim.keymap.set("n", "<leader>rs", dotnet_utils.switch_solution, { desc = "Watch all projects", noremap = true })
-vim.keymap.set("n", "<leader>rl", dotnet_utils.list_terminals, { desc = "Dotnet List Terminals" })
-vim.keymap.set("n", "<leader>rc", dotnet_utils.close_all_terminals, { desc = "Dotnet Close All Terminals" })
-vim.keymap.set("n", "<leader>rn", dotnet_utils.run_tests_with_neotest, { desc = "Run Test with Neotest" })
--- vim.keymap.set("n", "<leader>rn", dotnet_utils.cycle_terminal, { desc = "Dotnet Cycle Terminals" })
+-- Launch, limiting search/replace to current file
+-- https://github.com/MagicDuck/grug-far.nvim?tab=readme-ov-file#-cookbook
+vim.keymap.set(
+  { "v" },
+  "<leader>s1",
+  '<cmd>lua require("grug-far").open({ prefills = { paths = vim.fn.expand("%") } })<cr>',
+  { noremap = true, silent = true }
+)
 
-vim.keymap.set("n", "<leader>ra", function()
-  dotnet_utils.run_all("dotnet run")
-end, { desc = "Dotnet run All Projects" })
-vim.keymap.set("n", "<leader>rA", function()
-  dotnet_utils.run_all("dotnet watch run")
-end, { desc = "Dotnet Watch All Projects" })
+-- Replaces the word I'm currently on, opens a terminal so that I start typing the new word
+-- It replaces the word globally across the entire file
+vim.keymap.set(
+  "n",
+  "<leader>su",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "[P]Replace word I'm currently on GLOBALLY" }
+)
+
+-- Replaces the current word with the same word in uppercase, globally
+vim.keymap.set(
+  "n",
+  "<leader>sU",
+  [[:%s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
+  { desc = "[P]GLOBALLY replace word I'm on with UPPERCASE" }
+)
+-- Toggle executable permission on current file, previously I had 2 keymaps, to
+-- add or remove exec permissions, now it's a toggle using the same keymap
+vim.keymap.set("n", "<leader>fx", function()
+  local file = vim.fn.expand("%")
+  local perms = vim.fn.getfperm(file)
+  local is_executable = string.match(perms, "x", -1) ~= nil
+  local escaped_file = vim.fn.shellescape(file)
+  if is_executable then
+    vim.cmd("silent !chmod -x " .. escaped_file)
+    vim.notify("Removed executable permission", vim.log.levels.INFO)
+  else
+    vim.cmd("silent !chmod +x " .. escaped_file)
+    vim.notify("Added executable permission", vim.log.levels.INFO)
+  end
+end, { desc = "Toggle executable permission" })
+
+-- If this is a bash script, make it executable, and execute it in a tmux pane on the right
+-- Using a tmux pane allows me to easily select text
+-- Had to include quotes around "%" because there are some apple dirs that contain spaces, like iCloud
+vim.keymap.set("n", "<leader>cb", function()
+  local file = vim.fn.expand("%") -- Get the current file name
+  local first_line = vim.fn.getline(1) -- Get the first line of the file
+  if string.match(first_line, "^#!/") then -- If first line contains shebang
+    local escaped_file = vim.fn.shellescape(file) -- Properly escape the file name for shell commands
+    -- Execute the script on a tmux pane on the right. On my mac I use zsh, so
+    -- running this script with bash to not execute my zshrc file after
+    -- vim.cmd("silent !tmux split-window -h -l 60 'bash -c \"" .. escaped_file .. "; exec bash\"'")
+    -- `-l 60` specifies the size of the tmux pane, in this case 60 columns
+    vim.cmd(
+      "silent !tmux split-window -h -l 60 'bash -c \""
+        .. escaped_file
+        .. "; echo; echo Press any key to exit...; read -n 1; exit\"'"
+    )
+  else
+    vim.cmd("echo 'Not a script. Shebang line not found.'")
+  end
+end, { desc = "[P]BASH, execute file" })
 
 --============================================
 vim.api.nvim_set_keymap("n", "<leader>n", "<cmd>Telescope buffers<CR>", { noremap = true, silent = true })

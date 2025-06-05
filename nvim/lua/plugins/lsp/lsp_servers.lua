@@ -1,8 +1,19 @@
 -- ~/.config/nvim/lua/config/lsp_servers.lua
-
+local lspconfig = require("lspconfig")
 local util = require("lspconfig").util
 local schemastore = require("schemastore")
-local omnisharp_bin = "/Users/mohamadelhajhassan/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
+-- local omnisharp_bin = "/Users/mohamadelhajhassan/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
+-- Get the Omnisharp binary from Mason
+local omnisharp_bin = vim.env.HOME .. "/.local/share/nvim/mason/packages/omnisharp/OmniSharp"
+local on_attach = function(client, bufnr)
+  -- Disable formatting to avoid conflicts with csharpier/conform.nvim
+  if client.server_capabilities.documentFormattingProvider then
+    client.server_capabilities.documentFormattingProvider = false
+  end
+  if client.server_capabilities.documentRangeFormattingProvider then
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end
+end
 -- local roslyn_bin = "/Users/mohamadelhajhassan/.local/share/nvim/mason/bin/roslyn"
 local servers = {}
 
@@ -59,110 +70,109 @@ servers.lua_ls = {
 servers.omnisharp = {
   cmd = {
     omnisharp_bin,
-    "-z",
-    "--hostPID",
-    tostring(vim.fn.getpid()),
-    "--encoding",
-    "utf-8",
-    "--languageserver",
   },
-  filetypes = { "cs", "vb" },
+
+  -- Use this for monorepos/multi-root workspaces
   root_dir = function(fname)
-    local root = util.root_pattern(".sln", ".csproj", ".git")(fname)
-    if root then
-      return root
-    else
-      -- No root found, don't start OmniSharp
-      return nil
-    end
+    return lspconfig.util.root_pattern("*.sln")(fname)
+      or lspconfig.util.root_pattern("*.csproj")(fname)
+      or lspconfig.util.find_git_ancestor(fname)
   end,
-  single_file_support = false, -- important to avoid multiple instances
-  capabilities = {
-    textDocument = {
-      completion = {
-        completionItem = {
-          commitCharactersSupport = false,
-          deprecatedSupport = true,
-          documentationFormat = { "markdown", "plaintext" },
-          insertReplaceSupport = true,
-          insertTextModeSupport = { valueSet = { 1 } },
-          labelDetailsSupport = true,
-          preselectSupport = false,
-          resolveSupport = {
-            properties = { "documentation", "detail", "additionalTextEdits", "command", "data" },
-          },
-          snippetSupport = true,
-          tagSupport = { valueSet = { 1 } },
-        },
-        completionList = {
-          itemDefaults = { "commitCharacters", "editRange", "insertTextFormat", "insertTextMode", "data" },
-        },
-        contextSupport = true,
-        insertTextMode = 1,
-      },
-    },
-    workspace = {
-      workspaceFolders = false,
-    },
+
+  filetypes = { "cs" },
+  single_file_support = false,
+  on_attach = on_attach,
+  handlers = {
+    ["textDocument/definition"] = require("omnisharp_extended").handler,
+    ["textDocument/references"] = require("omnisharp_extended").handler,
+    ["textDocument/implementation"] = require("omnisharp_extended").handler,
+    ["textDocument/typeDefinition"] = require("omnisharp_extended").handler,
   },
+
   settings = {
     FormattingOptions = {
       EnableEditorConfigSupport = true,
     },
-    MsBuild = {},
+    MsBuild = {
+      LoadProjectsOnDemand = true,
+    },
     RenameOptions = {},
-    RoslynExtensionsOptions = {},
+    RoslynExtensionsOptions = {
+      EnableAnalyzersSupport = true,
+      EnableImportCompletion = true,
+      AnalyzeOpenDocumentsOnly = false,
+    },
     Sdk = {
       IncludePrereleases = true,
     },
   },
 }
 
-servers.roslyn = {
-  cmd = {
-    "/Users/mohamadelhajhassan/.local/share/nvim/mason/bin/roslyn",
-    "--logLevel=Information",
-    "--extensionLogDirectory=/Users/mohamadelhajhassan/.local/state/nvim",
-    "--stdio",
-  },
-  cmd_env = { Configuration = "Debug" },
-  filetypes = { "cs" },
-  root_dir = function(fname)
-    local root = util.root_pattern(".sln", ".csproj", ".git")(fname)
-    if root then
-      return root
-    else
-      -- No root found, don't start OmniSharp
-      return nil
-    end
-  end,
-  single_file_support = false, -- important to avoid multiple instances
-  capabilities = {
-    textDocument = {
-      completion = {
-        completionItem = {
-          commitCharactersSupport = false,
-          deprecatedSupport = true,
-          documentationFormat = { "markdown", "plaintext" },
-          insertReplaceSupport = true,
-          insertTextModeSupport = { valueSet = { 1 } },
-          labelDetailsSupport = true,
-          preselectSupport = false,
-          resolveSupport = { properties = { "documentation", "detail", "additionalTextEdits", "command", "data" } },
-          snippetSupport = true,
-          tagSupport = { valueSet = { 1 } },
-        },
-        completionList = {
-          itemDefaults = { "commitCharacters", "editRange", "insertTextFormat", "insertTextMode", "data" },
-        },
-        contextSupport = true,
-        insertTextMode = 1,
-      },
-      diagnostic = { dynamicRegistration = true },
-    },
-  },
-}
-
+-- lspconfig.roslyn = {
+--   default_config = {
+--     cmd = {
+--       "dotnet",
+--       "/Users/mohamadelhajhassan/.local/share/nvim/mason/packages/roslyn/libexec/Microsoft.CodeAnalysis.LanguageServer",
+--       "--logLevel=Trace",
+--       "--extensionLogDirectory=/Users/mohamadelhajhassan/.local/state/nvim",
+--       "--stdio",
+--     },
+--     filetypes = { "cs" },
+--     root_dir = function(fname)
+--       return lspconfig.util.root_pattern("*.sln")(fname)
+--         or lspconfig.util.root_pattern("*.csproj")(fname)
+--         or lspconfig.util.find_git_ancestor(fname)
+--     end,
+--     single_file_support = false,
+--     settings = {
+--       ["csharp|background_analysis"] = {
+--         dotnet_analyzer_diagnostics_scope = "fullSolution",
+--         dotnet_compiler_diagnostics_scope = "fullSolution",
+--       },
+--       ["csharp|inlay_hints"] = {
+--         csharp_enable_inlay_hints_for_implicit_object_creation = true,
+--         csharp_enable_inlay_hints_for_implicit_variable_types = true,
+--         csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+--         csharp_enable_inlay_hints_for_types = true,
+--         dotnet_enable_inlay_hints_for_indexer_parameters = true,
+--         dotnet_enable_inlay_hints_for_literal_parameters = true,
+--         dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+--         dotnet_enable_inlay_hints_for_other_parameters = true,
+--         dotnet_enable_inlay_hints_for_parameters = true,
+--         dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+--         dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+--         dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+--       },
+--       ["csharp|code_lens"] = {
+--         dotnet_enable_references_code_lens = true,
+--         dotnet_enable_tests_code_lens = true,
+--       },
+--       ["csharp|completion"] = {
+--         dotnet_provide_regex_completions = true,
+--         dotnet_show_completion_items_from_unimported_namespaces = true,
+--         dotnet_show_name_completion_suggestions = true,
+--       },
+--       ["csharp|symbol_search"] = {
+--         dotnet_organize_imports_on_format = true,
+--       },
+--     },
+--     on_attach = function(client, bufnr)
+--       vim.notify("Roslyn LSP attached!")
+--
+--       -- Disable built-in formatting to prevent conflicts with external formatters
+--       client.server_capabilities.documentFormattingProvider = false
+--       client.server_capabilities.documentRangeFormattingProvider = false
+--
+--       vim.diagnostic.config({
+--         virtual_text = true,
+--         signs = true,
+--         underline = true,
+--         update_in_insert = false,
+--       }, bufnr)
+--     end,
+--     filewatching = "auto",
+--   },
+-- }
 -- 🐍 Python
 servers.ruff = {
   cmd = { "ruff", "server" },
@@ -364,7 +374,7 @@ servers.zls = {
 servers.taplo = {
   cmd = { "taplo", "lsp", "stdio" },
   filetypes = { "toml" },
-  root_dir = util.root_pattern(".git"),
+  root_dir = util.root_pattern("*.toml", ".git"),
 }
 
 return servers

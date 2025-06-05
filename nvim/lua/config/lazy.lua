@@ -10,13 +10,14 @@ if not vim.uv.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+-- Set the python3_host_prog variable
 
 require("lazy").setup({
   spec = {
     { import = "plugins" }, -- Imports all your plugin configs
     { import = "plugins.core" },
     { import = "plugins.lang" },
-    -- { import = "plugins.lang.csharp" },
+    { import = "plugins.colorschemes.eldritch" },
   },
   performance = {
     rtp = {

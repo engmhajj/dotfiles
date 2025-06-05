@@ -85,10 +85,24 @@ return {
       lualine_z = {},
     },
     winbar = {
-      lualine_c = { winbar_component },
+      lualine_c = {
+        winbar_component,
+        {
+          "diagnostics",
+          sources = { "nvim_diagnostic" },
+          symbols = { error = "⛔ ", warn = "⚠️ ", info = "ℹ️ ", hint = "💡" },
+        },
+      },
     },
     inactive_winbar = {
-      lualine_c = { winbar_component },
+      lualine_c = {
+        winbar_component,
+        {
+          "diagnostics",
+          sources = { "nvim_diagnostic" },
+          symbols = { error = "⛔ ", warn = "⚠️ ", info = "ℹ️ ", hint = "💡" },
+        },
+      },
     },
 
     sections = {
@@ -151,11 +165,7 @@ return {
             return { fg = "#ffaf00" } -- fallback yellow
           end,
         },
-        {
-          "diagnostics",
-          sources = { "nvim_diagnostic" },
-          symbols = { error = "⛔ ", warn = "⚠️ ", info = "ℹ️ ", hint = "💡" },
-        },
+
         {
           "diff",
           symbols = {

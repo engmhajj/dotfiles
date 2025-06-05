@@ -1,3 +1,7 @@
+if true then
+  return {}
+end
+
 local function set_dark()
   vim.o.background = "dark" -- NOTE: tokyonight-moon uses light background
   vim.cmd.colorscheme("tokyonight")
@@ -28,7 +32,7 @@ local function set_tmux(style)
 
   local tmux_theme = ""
   if style == "dark" then
-    tmux_theme = vim.fn.expand("~/.local/share/lazy/tokyonight.nvim/extra/tmux/tokyonight_night.tmux")
+    tmux_theme = vim.fn.expand("~/.local/share/nvim/lazy/tokyonight.nvim/extra/tmux/tokyonight_night.tmux")
     -- tmux_theme = vim.fn.expand("~/.tmux/plugins/tokyo-night-tmux/tokyo-night.tmux")
   elseif style == "light" then
     tmux_theme = vim.fn.expand("~/.local/share/lazy/nightfox.nvim/extra/dayfox/dayfox.tmux")
@@ -109,14 +113,25 @@ return {
         -- }
 
         if vim.o.background == "dark" then
-          hl.TitleFancy = { fg = "#f6c177" }
-          hl.TitleDouble = { fg = "#9ccfd8" }
-          hl.TitleWave = { fg = "#f0a0a0" }
-          hl.itleDiamond = { fg = "#d7827e"}
+          hl.TitleFancy = { fg = "#f6c177", bold = true }
+          hl.TitleDouble = { fg = "#9ccfd8", bold = true }
+          hl.TitleWave = { fg = "#f0a0a0", bold = true }
+          -- method definitions red
+          hl["@function.method"] = { fg = "#ff0000" }
+          -- method calls pink, override the broader method group
+          -- hl["@function.method.call"] = { fg = "#ff77aa" }
+
+          hl.CursorLineNr = {
+            bold = true,
+            fg = "#ff966c",
+          }
+
           -- Use bg.dark from storm (not night) for the cursor line background to make it more subtle
           hl.CursorLine = { bg = "#1f2335" }
           hl.Cursor = { bg = "#F712ff" }
           hl.CursorIM = { bg = "#F712FF" }
+          hl.String = { fg = "#ff00ff" }
+          hl.Comment = { fg = "#007500", italic = true, bold = true }
 
           -- Diff colors
           -- Brighten changes within a line

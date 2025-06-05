@@ -1,5 +1,5 @@
 local M = {}
-local util = require("lspconfig").util
+local lspconfig = require("lspconfig")
 --- Generate default capabilities using cmp_nvim_lsp and blink.cmp
 function M.get_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -179,41 +179,100 @@ function M.register_csharp_lsp(servers)
     print("✅ Roslyn is available. Using Roslyn as LSP for C#.")
     servers.roslyn = {
       cmd = {
-        "dotnet",
-        vim.fn.expand("~/.local/share/nvim/mason/packages/roslyn/libexec/Microsoft.CodeAnalysis.LanguageServer.dll"),
+        "/Users/mohamadelhajhassan/.local/share/nvim/mason/packages/roslyn/libexec/Microsoft.CodeAnalysis.LanguageServer",
+        "--logLevel=Trace",
+        "--extensionLogDirectory=/Users/mohamadelhajhassan/.local/state/nvim",
+        "--stdio",
       },
-      filetypes = { "cs", "vb" },
-      root_dir = util.root_pattern("*.sln", "*.csproj"),
+      filetypes = { "cs" },
+      on_attach = function(client, bufnr)
+        -- Disable formatting to avoid conflicts with csharpier/conform.nvim
+        if client.server_capabilities.documentFormattingProvider then
+          client.server_capabilities.documentFormattingProvider = false
+        end
+        if client.server_capabilities.documentRangeFormattingProvider then
+          client.server_capabilities.documentRangeFormattingProvider = false
+        end
+      end,
+
+      root_dir = function(fname)
+        return lspconfig.util.root_pattern("*.sln")(fname)
+          or lspconfig.util.root_pattern("*.csproj")(fname)
+          or lspconfig.util.find_git_ancestor(fname)
+      end,
+      settings = {
+        ["csharp|background_analysis"] = {
+          dotnet_analyzer_diagnostics_scope = "fullSolution",
+          dotnet_compiler_diagnostics_scope = "fullSolution",
+        },
+        ["csharp|inlay_hints"] = {
+          csharp_enable_inlay_hints_for_implicit_object_creation = true,
+          csharp_enable_inlay_hints_for_implicit_variable_types = true,
+          csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+          csharp_enable_inlay_hints_for_types = true,
+          dotnet_enable_inlay_hints_for_indexer_parameters = true,
+          dotnet_enable_inlay_hints_for_literal_parameters = true,
+          dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+          dotnet_enable_inlay_hints_for_other_parameters = true,
+          dotnet_enable_inlay_hints_for_parameters = true,
+          dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+          dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+          dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+        },
+        ["csharp|code_lens"] = {
+          dotnet_enable_references_code_lens = true,
+          dotnet_enable_tests_code_lens = true,
+        },
+        ["csharp|completion"] = {
+          dotnet_provide_regex_completions = true,
+          dotnet_show_completion_items_from_unimported_namespaces = true,
+          dotnet_show_name_completion_suggestions = true,
+        },
+        ["csharp|symbol_search"] = {
+          dotnet_organize_imports_on_format = true,
+        },
+      },
+      single_file_support = false,
     }
   else
     print("⚠️ Roslyn not found or failed. Falling back to OmniSharp.")
     servers.omnisharp = {
       cmd = {
-        vim.fn.expand("~/.local/share/nvim/mason/packages/path/to/omnisharp/OmniSharp"),
-        "--languageserver",
-        "--hostPID",
-        tostring(vim.fn.getpid()),
+        omnisharp_bin,
       },
-      filetypes = { "cs", "vb" },
-      root_dir = util.root_pattern("*.sln", "*.csproj"),
-      log_level = vim.lsp.protocol.MessageType.Warning,
-      init_options = {
-        formattingOptions = {
-          useTabs = false,
-          tabSize = 2,
-          newLinesForBracesInTypes = true,
-          newLinesForBracesInMethods = true,
-          newLinesForBracesInProperties = true,
-          newLinesForBracesInAccessors = true,
-          newLinesForBracesInControlBlocks = true,
-          newLinesForBracesInAnonymousMethods = true,
-        },
+
+      -- Use this for monorepos/multi-root workspaces
+      root_dir = function(fname)
+        return lspconfig.util.root_pattern("*.sln")(fname)
+          or lspconfig.util.root_pattern("*.csproj")(fname)
+          or lspconfig.util.find_git_ancestor(fname)
+      end,
+
+      filetypes = { "cs" },
+      single_file_support = false,
+      on_attach = on_attach,
+      handlers = {
+        ["textDocument/definition"] = require("omnisharp_extended").handler,
+        ["textDocument/references"] = require("omnisharp_extended").handler,
+        ["textDocument/implementation"] = require("omnisharp_extended").handler,
+        ["textDocument/typeDefinition"] = require("omnisharp_extended").handler,
       },
+
       settings = {
-        omnisharp = {
-          enable_editorconfig_support = true,
-          enable_roslyn_analyzers = true,
-          organize_imports_on_format = true,
+        FormattingOptions = {
+          EnableEditorConfigSupport = true,
+        },
+        MsBuild = {
+          LoadProjectsOnDemand = true,
+        },
+        RenameOptions = {},
+        RoslynExtensionsOptions = {
+          EnableAnalyzersSupport = true,
+          EnableImportCompletion = true,
+          AnalyzeOpenDocumentsOnly = false,
+        },
+        Sdk = {
+          IncludePrereleases = true,
         },
       },
     }

@@ -1,90 +1,90 @@
-local util
--- In your plugins.lua (or lazy config)
 return {
-  -- your existing plugins ...
+  "engmhajj/roslyn.nvim",
 
-  {
-    "seblj/roslyn.nvim",
-    ft = "cs",
-    opts = {
+  enabled = false,
+  ft = "cs",
+  event = "VeryLazy",
+  opts = {
+
+    config = {
       cmd = {
-        "/Users/mohamadelhajhassan/.local/share/nvim/mason/bin/roslyn",
+        "/Users/mohamadelhajhassan/.local/share/nvim/mason/packages/roslyn/roslyn",
         "--logLevel=Information",
-        "--extensionLogDirectory=/Users/mohamadelhajhassan/.local/state/nvim",
+        "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
         "--stdio",
       },
-      cmd_env = { Configuration = "Debug" },
+      -- root_dir = function(fname)
+      --   local lspconfig = require("lspconfig")
+      --   return lspconfig.util.root_pattern("*.sln")(fname)
+      --     or lspconfig.util.root_pattern("*.csproj")(fname)
+      --     or lspconfig.util.find_git_ancestor(fname)
+      -- end,
       filetypes = { "cs" },
-      capabilities = {
-        textDocument = {
-          completion = {
-            completionItem = {
-              commitCharactersSupport = false,
-              deprecatedSupport = true,
-              documentationFormat = { "markdown", "plaintext" },
-              insertReplaceSupport = true,
-              insertTextModeSupport = { valueSet = { 1 } },
-              labelDetailsSupport = true,
-              preselectSupport = false,
-              resolveSupport = { properties = { "documentation", "detail", "additionalTextEdits", "command", "data" } },
-              snippetSupport = true,
-              tagSupport = { valueSet = { 1 } },
-            },
-            completionList = {
-              itemDefaults = { "commitCharacters", "editRange", "insertTextFormat", "insertTextMode", "data" },
-            },
-            contextSupport = true,
-            insertTextMode = 1,
-          },
-          diagnostic = { dynamicRegistration = true },
+      on_attach = function(client, bufnr)
+        -- Disable formatting to avoid conflicts with csharpier/conform.nvim
+        if client.server_capabilities.documentFormattingProvider then
+          client.server_capabilities.documentFormattingProvider = false
+        end
+        if client.server_capabilities.documentRangeFormattingProvider then
+          client.server_capabilities.documentRangeFormattingProvider = false
+        end
+      end,
+      single_file_support = false,
+      settings = {
+        ["csharp|background_analysis"] = {
+          dotnet_analyzer_diagnostics_scope = "fullSolution",
+          dotnet_compiler_diagnostics_scope = "fullSolution",
+        },
+        ["csharp|inlay_hints"] = {
+          csharp_enable_inlay_hints_for_implicit_object_creation = true,
+          csharp_enable_inlay_hints_for_implicit_variable_types = true,
+          csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+          csharp_enable_inlay_hints_for_types = true,
+          dotnet_enable_inlay_hints_for_indexer_parameters = true,
+          dotnet_enable_inlay_hints_for_literal_parameters = true,
+          dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+          dotnet_enable_inlay_hints_for_other_parameters = true,
+          dotnet_enable_inlay_hints_for_parameters = true,
+          dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+          dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+          dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+        },
+        ["csharp|code_lens"] = {
+          dotnet_enable_references_code_lens = true,
+          dotnet_enable_tests_code_lens = true,
+        },
+        ["csharp|completion"] = {
+          dotnet_provide_regex_completions = true,
+          dotnet_show_completion_items_from_unimported_namespaces = true,
+          dotnet_show_name_completion_suggestions = true,
+        },
+        ["csharp|symbol_search"] = {
+          dotnet_organize_imports_on_format = true,
+        },
+        -- Try enabling code fixes and diagnostics for missing usings explicitly
+        ["csharp|diagnostics"] = {
+          dotnet_enable_missing_usings = true,
         },
       },
-      commands = {
-        ["roslyn.client.completionComplexEdit"] = function()
-          vim.notify("[roslyn] CompletionComplexEdit command called", vim.log.levels.INFO)
-        end,
-        ["roslyn.client.fixAllCodeAction"] = function()
-          vim.notify("[roslyn] FixAllCodeAction command called", vim.log.levels.INFO)
-        end,
-        ["roslyn.client.nestedCodeAction"] = function()
-          vim.notify("[roslyn] NestedCodeAction command called", vim.log.levels.INFO)
-        end,
-      },
-      handlers = {
-        ["client/registerCapability"] = function(err, result, ctx, config)
-          if err then
-            vim.notify("[roslyn] Error registering capability: " .. err.message, vim.log.levels.ERROR)
-            return
-          end
-          vim.lsp.handlers["client/registerCapability"](err, result, ctx, config)
-        end,
-        ["workspace/_roslyn_projectHasUnresolvedDependencies"] = function()
-          vim.notify("[roslyn] Project has unresolved dependencies", vim.log.levels.WARN)
-        end,
-        ["workspace/projectInitializationComplete"] = function()
-          vim.notify("[roslyn] Project initialization complete", vim.log.levels.INFO)
-        end,
-        ["workspace/refreshSourceGeneratedDocument"] = function()
-          vim.notify("[roslyn] Source generated document refreshed", vim.log.levels.INFO)
-        end,
-      },
-      on_exit = function(code, signal, client_id)
-        print(string.format("[roslyn] exited with code %d, signal %d, client_id %d", code, signal, client_id))
-      end,
-      on_init = function(client, _)
-        print("[roslyn] initialized")
-      end,
-      root_dir = function(fname)
-        if not util then
-          util = require("lspconfig.util")
-        end
-        return util.root_pattern(".sln", ".csproj", ".git")(fname)
-      end,
     },
-    config = function(_, opts)
-      require("roslyn").setup(opts)
-    end,
   },
+  config = function(_, opts)
+    require("roslyn").setup(opts)
+    -- Diagnostics refresh autocmd on InsertLeave:
+    vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+      pattern = "*",
+      callback = function()
+        local clients = vim.lsp.get_clients({ name = "roslyn" })
+        if not clients or #clients == 0 then
+          return
+        end
 
-  -- your other plugins ...
+        local buffers = vim.lsp.get_buffers_by_client_id(clients[1].id)
+        for _, buf in ipairs(buffers) do
+          vim.lsp.util._refresh("textDocument/diagnostic", { bufnr = buf })
+        end
+      end,
+      desc = "Refresh roslyn diagnostics after insert mode",
+    })
+  end,
 }

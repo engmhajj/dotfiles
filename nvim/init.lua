@@ -15,7 +15,9 @@ end
 -- set up backwards compatibility
 require("utils.version").setup_backwards_compat()
 
--- set options
+-- ╔═════════════════════╗
+-- ║     set options     ║
+-- ╚═════════════════════╝
 require("config.options")
 
 -- set auto commands
@@ -27,12 +29,17 @@ require("config.autocmds")
 require("config.lazy")
 require("config.dadbob")
 require("config.curl-config")
-require("utils.comment_title").setup({
-  style = "fancy",
+require("boxed_comment.setup").setup({
+  style = "kawaii",
   max_width = 80,
-  padding = 10,
+  padding = 5,
   filetype_styles = {
     lua = "kawaii",
-    markdown = "markdown",
+    python = "ascii",
   },
+  strip_existing_comments = true,
 })
+vim.cmd.colorscheme("eldritch")
+
+require("dotnet_utils").setup()
+require("dotnet_utils.keymaps").setup()

@@ -1,3 +1,42 @@
+local function paste_path_from_clipboard(state)
+  local node = state.tree:get_node()
+  if not node or node.type ~= "directory" then
+    print("Please select a destination folder in Neo-tree.")
+    return
+  end
+
+  local dest_dir = node.path
+  local src_path = vim.fn.getreg("+"):gsub("\n", "")
+
+  if src_path == "" then
+    print("Clipboard is empty or doesn't contain a valid path.")
+    return
+  end
+
+  local filename = vim.fn.fnamemodify(src_path, ":t")
+  local dest_path = dest_dir .. "/" .. filename
+
+  -- Determine if source is file or directory
+  local stat = vim.loop.fs_stat(src_path)
+  if not stat then
+    print("Source path does not exist: " .. src_path)
+    return
+  end
+
+  local cmd
+  if stat.type == "directory" then
+    cmd = string.format('cp -R "%s" "%s"', src_path, dest_path)
+  else
+    cmd = string.format('cp "%s" "%s"', src_path, dest_path)
+  end
+
+  local result = os.execute(cmd)
+  if result == 0 then
+    print("✅ Copied: " .. filename .. " → " .. dest_dir)
+  else
+    print("❌ Failed to copy.")
+  end
+end
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -12,24 +51,32 @@ return {
     keys = {
       {
         "<leader>fe",
-        function() require("neo-tree.command").execute({ toggle = true }) end,
+        function()
+          require("neo-tree.command").execute({ toggle = true })
+        end,
         desc = "Explorer NeoTree (Root Dir)",
       },
       {
         "<leader>fE",
-        function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end,
+        function()
+          require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
+        end,
         desc = "Explorer NeoTree (cwd)",
       },
       { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
       { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
       {
         "<leader>ge",
-        function() require("neo-tree.command").execute({ source = "git_status", toggle = true }) end,
+        function()
+          require("neo-tree.command").execute({ source = "git_status", toggle = true })
+        end,
         desc = "Git Explorer",
       },
       {
         "<leader>be",
-        function() require("neo-tree.command").execute({ source = "buffers", toggle = true }) end,
+        function()
+          require("neo-tree.command").execute({ source = "buffers", toggle = true })
+        end,
         desc = "Buffer Explorer",
       },
     },
@@ -42,7 +89,9 @@ return {
         desc = "Start Neo-tree with directory",
         once = true,
         callback = function()
-          if package.loaded["neo-tree"] then return end
+          if package.loaded["neo-tree"] then
+            return
+          end
           local stats = vim.uv.fs_stat(vim.fn.argv(0))
           if stats and stats.type == "directory" then
             require("neo-tree")
@@ -70,7 +119,9 @@ return {
       event_handlers = {
         {
           event = "file_opened",
-          handler = function() require("neo-tree").close_all() end,
+          handler = function()
+            require("neo-tree").close_all()
+          end,
         },
       },
       filesystem = {
@@ -81,14 +132,24 @@ return {
           hide_dotfiles = false,
           hide_gitignored = false,
           hide_by_name = {
-            ".git", ".hg", ".svc", ".DS_Store", "thumbs.db",
-            ".sass-cache", "node_modules", ".pytest_cache",
-            ".mypy_cache", "__pycache__", ".stfolder", ".stversions",
+            ".git",
+            ".hg",
+            ".svc",
+            ".DS_Store",
+            "thumbs.db",
+            ".sass-cache",
+            "node_modules",
+            ".pytest_cache",
+            ".mypy_cache",
+            "__pycache__",
+            ".stfolder",
+            ".stversions",
           },
           never_show_by_pattern = { "vite.config.js.timestamp-*" },
         },
         window = {
           mappings = {
+            ["P"] = paste_path_from_clipboard,
             ["R"] = "easy",
             ["l"] = "open",
             ["h"] = "close_node",
@@ -106,9 +167,9 @@ return {
               end,
               desc = "Open with System Application",
             },
-            ["p"] = { "toggle_preview", config = { use_float = false } },
+            ["p"] = { "toggle_preview", config = { use_float = true } },
             ["K"] = { "preview", config = { use_float = true } },
-            ["P"] = "paste_from_clipboard",
+            -- ["P"] = "paste_from_clipboard",
             ["w"] = function(state)
               local normal = state.window.width
               local large = normal * 1.9
@@ -127,7 +188,8 @@ return {
         commands = {
           easy = function(state)
             local node = state.tree:get_node()
-            local path = node.type == "directory" and node.path or (vim.fs and vim.fs.dirname(node.path) or node.path:match("(.*/)$"))
+            local path = node.type == "directory" and node.path
+              or (vim.fs and vim.fs.dirname(node.path) or node.path:match("(.*/)$"))
             require("easy-dotnet").create_new_item(path, function()
               require("neo-tree.sources.manager").refresh(state.name)
             end)
@@ -161,7 +223,7 @@ return {
           symbols = {
             added = "❇️",
             modified = "📝",
-            removed = "❌",
+            removed = "🗑️",
             unstaged = "󰄱",
             staged = "󰱒",
           },

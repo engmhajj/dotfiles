@@ -61,7 +61,8 @@ return {
         csharpier = {
           command = "csharpier",
           args = { "format", "--write-stdout" },
-          to_srdin = true,
+          -- to_srdin = true,
+          to_stdin = true, -- fix here
         },
       },
     },

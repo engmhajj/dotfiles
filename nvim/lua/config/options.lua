@@ -1,5 +1,5 @@
 M = {}
-
+vim.lsp.set_log_level("ERROR") -- or "WARN", "INFO", "DEBUG"
 -- nvim color
 vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
 
@@ -37,6 +37,7 @@ vim.opt.laststatus = 3 -- Use global statusline
 vim.opt.splitbelow = true -- Terminal opens below
 vim.opt.splitright = true -- Next terminal opens right
 
+-- vim.cmd("set loglevel=ERROR") -- suppress verbose WARNs
 -- Fold
 -- vim.o.foldmethod="marker"
 -- vim.o.foldmethod = "manual"
@@ -116,7 +117,6 @@ vim.opt.linebreak = true -- Wrap lines at convenient points
 vim.opt.completeopt = "menuone,noselect"
 
 -- 24-bit color
-vim.opt.termguicolors = true
 
 -- sign column
 vim.opt.signcolumn = "yes"
